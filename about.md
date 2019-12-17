@@ -36,7 +36,8 @@ My training and qualifications include:
 - EC-Council "Computer Hacking Forensic Investigator",  
 - SANS "FOR610 GIAC Reverse Engineering Malware", 
 
-
+- McAfee (trainings)
+- Mandiant trainings
 
 - [https://www.youracclaim.com/badges/db3f1abc-56c3-475e-88fc-51a56bc62219/public_url"](GIAC Reverse Engineering Malware (GREM))
 - [https://www.youracclaim.com/badges/7e90af75-048e-479d-89c1-1088b5bf55ae/public_url"](GIAC Certified Intrusion Analyst (GCIA))
