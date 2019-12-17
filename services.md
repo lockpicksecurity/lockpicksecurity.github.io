@@ -5,9 +5,6 @@ permalink: /services/
 published: true
 ---
 
-
-# Services
-
 ## Digital Investigations
 Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.
 
