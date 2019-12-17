@@ -29,6 +29,7 @@ My training and qualifications include:
 
 - SANS "SEC503 Intrusion Detection In-Depth", 2016
 - ISC2 "Certified - Information Systems Security Professional (CISSP)", 
+- FireEye "Systems engineer", 2014
 - Bit9 "Carbon Black", 
 - Access Data "Resolution One", 2014
 - EC-Council "Computer Hacking Forensic Investigator",  
