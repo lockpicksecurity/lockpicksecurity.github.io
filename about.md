@@ -4,11 +4,16 @@ title: About
 permalink: /about/
 published: true
 ---
+
 **Our Approach**
 
 ![Our Approach]({{site.baseurl}}/working_environment-300x168.jpg)
 
 Lock Pick Security Ltd is a research-led company providing unique approach in combating adversaries. It is found by Kiril Manasiev who has over 8 years of experience in fighting nation state threat actors and other adversaries in the front line trenches of Incident Response. Over the years he has applied that same unique approach which you will get once you engage us to protect your environment.
+
+
+
+
 
 
 
