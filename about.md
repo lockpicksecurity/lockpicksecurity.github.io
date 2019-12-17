@@ -44,7 +44,3 @@ My training and qualifications include:
 - [https://www.youracclaim.com/badges/59432adc-9869-458c-b0c3-cefbab516c4e/public_url"](Certified - Information Systems Security Professional (CISSP))
 - Computer Hacking Forensic Investigator (CHFI)
 
-
-**Contact Us**
-
-[response@lockpicksecurity.com](mailto:response@lockpicksecurity.com)
