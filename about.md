@@ -5,7 +5,7 @@ permalink: /about/
 published: true
 ---
 
-**Our Approach**
+## Our Approach
 
 ![Our Approach]({{site.baseurl}}/working_environment-300x168.jpg)
 
@@ -14,10 +14,7 @@ Lock Pick Security Ltd is a research-led company providing unique approach in co
 
 
 
-
-
-
-**Kiril Manasiev - Director**
+## Kiril Manasiev - Director
 
 ![Kiril Manasiev - Director]({{site.baseurl}}/Kiril_Manasiev-294x300.jpg)
 
@@ -30,22 +27,18 @@ My training and qualifications include:
 - Udemy "Hands-on Exploit Development", July 2019 
 - Splunk "Splunk 7.x Fundamentals Part 1", June 2019
 - SANS "FOR526 - Memory Forensics In-Depth", June 2019
-- Qualys ""
 - Tanium "Tanium Foundation, Operations, & IR Deep Dive", April 2018
-
+- Qualys "Vulnerability Management", March 2018
+- Qualys "Policy Compliancet", March 2018
+- Qualys "Web Application Scanning", March 2018
 - SANS "SEC503 Intrusion Detection In-Depth", 2016
-- ISC2 "Certified - Information Systems Security Professional (CISSP)", 
+- ISC2 "Certified - Information Systems Security Professional (CISSP)", July 2015
 - FireEye "Systems engineer", 2014
 - Bit9 "Carbon Black", 
-- Access Data "Resolution One", 2014
-- EC-Council "Computer Hacking Forensic Investigator",  
+- Access Data "Resolution One", July 2014
+- EC-Council "Computer Hacking Forensic Investigator (CHFI)",  
 - SANS "FOR610 GIAC Reverse Engineering Malware", 
 
 - McAfee (trainings)
 - Mandiant trainings
-
-- [https://www.youracclaim.com/badges/db3f1abc-56c3-475e-88fc-51a56bc62219/public_url"](GIAC Reverse Engineering Malware (GREM))
-- [https://www.youracclaim.com/badges/7e90af75-048e-479d-89c1-1088b5bf55ae/public_url"](GIAC Certified Intrusion Analyst (GCIA))
-- [https://www.youracclaim.com/badges/59432adc-9869-458c-b0c3-cefbab516c4e/public_url"](Certified - Information Systems Security Professional (CISSP))
-- Computer Hacking Forensic Investigator (CHFI)
 
