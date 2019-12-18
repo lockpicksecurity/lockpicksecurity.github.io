@@ -41,4 +41,5 @@ My training and qualifications include:
 
 - McAfee (trainings)
 - Mandiant trainings
+- Forensic hand-on certificate
 
