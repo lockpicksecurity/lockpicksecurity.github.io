@@ -8,7 +8,7 @@ published: true
 ## Digital Investigations
 
 <div style="clear: left;">
-    <p style="float: left;"><img src="{{ site.baseurl }}/images/forensics.png"></p>
+    <p style="float: left;"><img src="{{ site.baseurl }}/images/forensics.png" height="100%" width="60%"></p>
     <p>Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.</p>
 </div>
 
