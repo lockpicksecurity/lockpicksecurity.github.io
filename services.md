@@ -9,10 +9,10 @@ published: true
 
  <table style="width:100%">
   <tr>
-    <th>
+    <tb>
       <p style="text-align:left;">Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.</p>
-    </th>
-    <th><p style="text-align:rght;"><img src="{{ site.baseurl }}/images/forensics.png" style="width:100%;"></p></th>
+    </tb>
+    <tb><p style="text-align:rght;"><img src="{{ site.baseurl }}/images/forensics.png" style="width:100%;"></p></tb>
   </tr>
 </table> 
 
