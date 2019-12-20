@@ -8,23 +8,9 @@ published: true
 ## Digital Investigations
 
 <div style="clear: left;">
-    <p style="float: left;"><img src="{{ site.baseurl }}/images/forensics.png" height="300px" width="500px"></p>
+    <p><img src="{{ site.baseurl }}/images/forensics.png"></p>
     <p>Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.</p>
 </div>
-
-
- <table style="width:100%">
-  <tr>
-    <td>
-      <p style="text-align:left;" style="width:75%;">Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.</p>
-    </td>
-    <td>
-      <img src="{{ site.baseurl }}/images/forensics.png" style="width:100%;">
-    </td>
-  </tr>
-</table> 
-
-
 
 ## Incident Response
 We assist companies with security incidents they are experiencing on an Ad-hoc basis or  make sure their environments are breach free as part of our Incident Response retainer.
