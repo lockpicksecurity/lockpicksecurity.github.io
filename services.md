@@ -18,10 +18,16 @@ published: true
 </div>
 
 ## Malware Analysis
-Do you want to know if an executable or document file is created with a malicious intent? We can help you by inspecting the malware specimen's behaviour in our lab or reverse engineer it in order to understand its inner-workings. We will provide you with a human friendly interpretation of the deeply technical analysis results.
+<div style="clear: left;">
+    <p><img src="{{ site.baseurl }}/images/cropped-x64bgg.png"></p>
+    <p>Do you want to know if an executable or document file is created with a malicious intent? We can help you by inspecting the malware specimen's behaviour in our lab or reverse engineer it in order to understand its inner-workings. We will provide you with a human friendly interpretation of the deeply technical analysis results.</p>
+</div>
 
 ## Network Security Monitoring
-We can increase the visibility in your environment by installing our network monitoring devices which will alert if malicious traffic is detected and store valuable network communication data to assist in further investigations. (in development)
+<div style="clear: left;">
+    <p><img src="{{ site.baseurl }}/images/NSM.png"></p>
+    <p>We can increase the visibility in your environment by installing our network monitoring devices which will alert if malicious traffic is detected and store valuable network communication data to assist in further investigations. (in development)</p>
+</div>
 
 ## Compromise Assessment
 <div style="clear: left;">
