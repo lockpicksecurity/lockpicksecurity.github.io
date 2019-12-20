@@ -12,7 +12,7 @@ published: true
     <th>
       <p>Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.</p>
     </th>
-    <th><p style="text-align:center;"><img src="{{ site.baseurl }}/images/Logo-transparent-small-768x797.png" style="width: 450px;"/></p></th>
+    <th><p style="text-align:center;"><img src="{{ site.baseurl }}/images/forensics.png";"/></p></th>
   </tr>
 </table> 
 
