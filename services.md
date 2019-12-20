@@ -6,7 +6,18 @@ published: true
 ---
 
 ## Digital Investigations
+
+ <table style="width:100%">
+  <tr>
+    <th>
+      <p>Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.</p>
+    </th>
+    <th>image</th>
+  </tr>
+</table> 
+
 Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.
+
 
 ## Incident Response
 We assist companies with security incidents they are experiencing on an Ad-hoc basis or  make sure their environments are breach free as part of our Incident Response retainer.
