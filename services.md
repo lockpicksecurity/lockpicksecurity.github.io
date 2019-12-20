@@ -13,12 +13,11 @@ published: true
       <p style="text-align:left;" style="width:75%;">Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.</p>
     </td>
     <td>
-      <img src="{{ site.baseurl }}/images/forensics.png" style="width:300px;">
+      <img src="{{ site.baseurl }}/images/forensics.png" style="width:100%;">
     </td>
   </tr>
 </table> 
 
-Whether you need to forensically investigate a security incident or understand why certain event occurred, we can help you by applying our experience in dealing with complex digital investigations.
 
 
 ## Incident Response
