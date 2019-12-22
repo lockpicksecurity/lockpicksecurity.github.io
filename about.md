@@ -23,23 +23,28 @@ My work experience has been primarily focused on investigating and responding to
 
 My training and qualifications include:
 
+### Vendor agnostic:
+
 - SANS "SEC760: Advanced Exploit Development for Penetration Testers", November 2019
 - Udemy "Hands-on Exploit Development", July 2019 
-- Splunk "Splunk 7.x Fundamentals Part 1", June 2019
 - SANS "FOR526 - Memory Forensics In-Depth", June 2019
+- SANS "SEC503 Intrusion Detection In-Depth", 2016
+- ISC2 "Certified - Information Systems Security Professional (CISSP)", July 2015
+- EC-Council "Computer Hacking Forensic Investigator (CHFI)",  
+- SANS "FOR610 GIAC Reverse Engineering Malware", 
+- Forensic hand-on certificate
+
+### Vendor specific:
+
+- Splunk "Splunk 7.x Fundamentals Part 1", June 2019
 - Tanium "Tanium Foundation, Operations, & IR Deep Dive", April 2018
 - Qualys "Vulnerability Management", March 2018
 - Qualys "Policy Compliancet", March 2018
 - Qualys "Web Application Scanning", March 2018
-- SANS "SEC503 Intrusion Detection In-Depth", 2016
-- ISC2 "Certified - Information Systems Security Professional (CISSP)", July 2015
 - FireEye "Systems engineer", 2014
 - Bit9 "Carbon Black", 
 - Access Data "Resolution One", July 2014
-- EC-Council "Computer Hacking Forensic Investigator (CHFI)",  
-- SANS "FOR610 GIAC Reverse Engineering Malware", 
-
 - McAfee (trainings)
 - Mandiant trainings
-- Forensic hand-on certificate
+
 
