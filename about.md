@@ -39,7 +39,7 @@ My training and qualifications include:
 - Splunk "Splunk 7.x Fundamentals Part 1", June 2019
 - Tanium "Tanium Foundation, Operations, & IR Deep Dive", April 2018
 - Qualys "Vulnerability Management", March 2018
-- Qualys "Policy Compliancet", March 2018
+- Qualys "Policy Compliance", March 2018
 - Qualys "Web Application Scanning", March 2018
 - FireEye "Systems engineer", 2014
 - Bit9 "Carbon Black", 
