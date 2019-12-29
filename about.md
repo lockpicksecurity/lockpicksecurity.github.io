@@ -14,7 +14,7 @@ Lock Pick Security Ltd is a research-led company providing unique approach in co
 
 
 
-## Kiril Manasiev - Director
+## Kiril Manasiev - Founder
 
 ![Kiril Manasiev - Director]({{site.baseurl}}/Kiril_Manasiev-294x300.jpg)
 
