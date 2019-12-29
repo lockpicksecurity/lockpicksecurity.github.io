@@ -29,9 +29,9 @@ My training and qualifications include:
 - Udemy "Hands-on Exploit Development", July 2019 
 - SANS "FOR526 - Memory Forensics In-Depth", June 2019
 - SANS "SEC503 Intrusion Detection In-Depth", November 2015
-- ISC2 "Certified - Information Systems Security Professional (CISSP)", July 2015
+- ISC2 "Certified Information Systems Security Professional", July 2015
 - SANS "FOR610 GIAC Reverse Engineering Malware", October 2011
-- EC-Council "Computer Hacking Forensic Investigator (CHFI)", May 2011
+- EC-Council "Computer Hacking Forensic Investigator", May 2011
 - New Horizons "Hands-on Computer Forensics Workshop", January 2011
 
 ### Vendor specific:
@@ -45,6 +45,6 @@ My training and qualifications include:
 - Bit9 "Carbon Black", January 2015
 - FireEye "NX, EX, HX, FX, CM, AX", December 2014
 - Access Data "Resolution One", July 2014
-- McAfee (trainings)
+- McAfee "VirusScan Enterprise, Host Intrusion Prevention, ePolicy Orchestrator, Endpoint Encryption, Data Protection Technical, Foundstone, Groupshield, Policy Auditor, Network Access Control, Solidcore, Risk and Compliance Management, Network Security, Secure Computing", February 2010
 
 
