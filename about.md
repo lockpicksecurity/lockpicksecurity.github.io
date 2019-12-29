@@ -45,6 +45,4 @@ My training and qualifications include:
 - Bit9 "Carbon Black", January 2015
 - FireEye "NX, EX, HX, FX, CM, AX", December 2014
 - Access Data "Resolution One", July 2014
-- McAfee "VirusScan Enterprise, Host Intrusion Prevention, ePolicy Orchestrator, Endpoint Encryption, Data Protection Technical, Foundstone, Groupshield, Policy Auditor, Network Access Control, Solidcore, Risk and Compliance Management, Network Security, Secure Computing", February 2010
-
-
+- McAfee "VirusScan Enterprise, Host Intrusion Prevention, ePolicy Orchestrator, Endpoint Encryption, Data Protection, Foundstone, Groupshield, Policy Auditor, Network Access Control, Solidcore, Risk and Compliance Management, Network Security, Secure Computing", February 2010
