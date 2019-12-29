@@ -28,7 +28,7 @@ My training and qualifications include:
 - SANS "SEC760: Advanced Exploit Development for Penetration Testers", November 2019
 - Udemy "Hands-on Exploit Development", July 2019 
 - SANS "FOR526 - Memory Forensics In-Depth", June 2019
-- SANS "SEC503 Intrusion Detection In-Depth", 2016
+- SANS "SEC503 Intrusion Detection In-Depth", November 2015
 - ISC2 "Certified - Information Systems Security Professional (CISSP)", July 2015
 - SANS "FOR610 GIAC Reverse Engineering Malware", October 2011
 - EC-Council "Computer Hacking Forensic Investigator (CHFI)", May 2011
