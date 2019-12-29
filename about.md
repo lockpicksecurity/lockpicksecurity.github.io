@@ -30,9 +30,9 @@ My training and qualifications include:
 - SANS "FOR526 - Memory Forensics In-Depth", June 2019
 - SANS "SEC503 Intrusion Detection In-Depth", 2016
 - ISC2 "Certified - Information Systems Security Professional (CISSP)", July 2015
-- EC-Council "Computer Hacking Forensic Investigator (CHFI)",  
-- SANS "FOR610 GIAC Reverse Engineering Malware", 
-- Forensic hand-on certificate
+- SANS "FOR610 GIAC Reverse Engineering Malware", October 2011
+- EC-Council "Computer Hacking Forensic Investigator (CHFI)", May 2011
+- New Horizons "Hands-on Computer Forensics Workshop", January 2011
 
 ### Vendor specific:
 
@@ -41,10 +41,10 @@ My training and qualifications include:
 - Qualys "Vulnerability Management", March 2018
 - Qualys "Policy Compliance", March 2018
 - Qualys "Web Application Scanning", March 2018
-- FireEye "Systems engineer", 2014
-- Bit9 "Carbon Black", 
+- Mandiant "Mandiant Partnership Training", January 2016
+- Bit9 "Carbon Black", January 2015
+- FireEye "NX, EX, HX, FX, CM, AX", December 2014
 - Access Data "Resolution One", July 2014
 - McAfee (trainings)
-- Mandiant trainings
 
 
