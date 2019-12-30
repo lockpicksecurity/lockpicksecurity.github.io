@@ -180,7 +180,105 @@ After resolving the addresses of Windows API functions, the “injected.exe” m
 
 ![31.png]({{site.baseurl}}/_posts/31.png)
 
+The key used to decode the embedded configuration is “8D 60 D3 01 CB 12 4F 4D” which decodes the following configuration data blob:
 
+![32.png]({{site.baseurl}}/_posts/32.png)
+
+It does seem to contain the initial C2 servers (divided by the pipe symbol) as well as the version of the Hancitor malware – “25phe01”. We have seen the malware contacting only the first C2 server in the PCAP file, but should it have failed, the malware would try contacting the rest of the C2 servers in the list.
+
+After the C2 URL is obtained, an HTTP POST request is built to be sent by the malware towards it. The malware is using a hard-coded user agent and HTTP header fields, but none of them seems to be unique enough to make an IOC out of it.
+
+After the POST request is sent, the malware will read the response from the server and check if it is Base64 encoded. If not or no data is returned, the malware will re-attempt to connect with any of the other C2 servers.
+
+As it turns out, the first four bytes of that Base64 string are ignored and whatever is left goes through the de-obfuscation routine –> Base64 decode + XOR with the “0x7A” key.
+
+![33.png]({{site.baseurl}}/_posts/33.png)
+
+Now we have the knowledge of how to decode this initial traffic and we turn our attention back to the traffic associated with that initial beacon out. After decoding the blob, it seems to contain a big list of what looks like additional C2 servers.
+
+![34.png]({{site.baseurl}}/_posts/34.png)
+
+We immediately recognize the mail.voicesinprintpublishing.com and neubacher.at entries as we have seen them in the PCAP file.
+
+We now need to understand how the malware interprets this data and what actions are taken as a response to it.
+The switch-table function (offset 0x402170) is where the commands from the servers are interpreted and acted on. We have only seen the options “l”, “b” and “r” in the decoded C2 server list so we will focus on them only.
+
+![35.png]({{site.baseurl}}/_posts/35.png)
+
+The option “l” leads to downloading an executable from the C2 server and run it in the memory space of malware’s own process, whereas option “b” will inject the code in svchost.exe process explicitly.
+The routine taken when the option “r” is passed on ultimately leads to the download of an executable from the C2 server into a file on disk and its consequent execution, but let’s take a closer look at it.
+
+It mainly downloads and decodes an executable from the C2 channel, writes it to a temp file and runs it.
+
+![36.png]({{site.baseurl}}/_posts/36.png)
+
+Since we’re interested in how the data is downloaded and decoded from the C2 server as well as how it’s saved and executed we’ll take a look at both functions.
+
+Looking at the “Download_DecodeExecutableFromC2” routine (address 0x401940) we see that the malware would create an HTTP GET request to the first C2 server in the list and contact the rest if no appropriate response is received. The returned back data is checked for the presence of few magic bytes {80 A8 15 54}, which are more than likely the encoded output of the first bytes of an executable file, and if the requirement is satisfied the buffer is passed on for de-obfuscation.
+
+![37.png]({{site.baseurl}}/_posts/37.png)
+
+These magic bytes are exactly what we have seen in the PCAP as a response from “mail.voicesinprintpublishing.com”
+
+![38.png]({{site.baseurl}}/_posts/38.png)
+
+The decoded executable would go through the “WriteTmpFileAndExecute” (offset 0x402EA0) function, where it will be saved on disk in the %TEMP% folder with a randomly generated filename, which is always prefixed by the “BN” characters.
+
+![39.png]({{site.baseurl}}/_posts/39.png)
+
+Looking at the de-obfuscation routine (Offset 0x4015B0), we can see that it’s doing some byte mangling before decompressing it using the LZNT1 format.
+
+![40.png]({{site.baseurl}}/_posts/40.png)
+
+Despite being rather simple routine to code in python, we’ll use some binary instrumentation to recreate the decoding functionality of the malware. In order to do that we’ll use the unicorn python library which emulates CPU instructions. Since python does not natively support LZNT1 decompression a third party library was used.
+Unfortunately this library produced errors when used in a script, but worked just fine when invoked from the python interpreter directly so only the byte shifting functionality has been ported to python. Below is the code used to re-implement the byte mangling functionality:
+
+from __future__ import print_function
+from unicorn import *
+from unicorn.x86_const import *
+
+f = open("/path/to/extracted/binary1.raw", "rb")
+obfuscated = f.read()
+f.close()
+
+# code to be emulated (taken from loc_4015D4)
+SC = b"\x8B\xC1\x83\xE0\x07\x8A\x04\x30\x30\x04\x31\x41\x3B\xCA\x72\xF0"
+
+# Build final code to emulate
+X86_CODE32 = SC + obfuscated![41.png]({{site.baseurl}}/_posts/41.png)
+
+
+# memory address where emulation starts
+ADDRESS = 0x1000000
+print("Emulate i386 code")
+try:
+    ADDRESS = 0x1000000
+    mu = Uc(UC_ARCH_X86, UC_MODE_32)
+    mu.mem_map(ADDRESS, 5 * 1024 * 1024) #Allocate 5MB.
+    mu.mem_write(ADDRESS, X86_CODE32)
+    mu.reg_write(UC_X86_REG_ECX, 0x8)
+    mu.reg_write(UC_X86_REG_EDX, len(obfuscated))
+    mu.reg_write(UC_X86_REG_ESI, 0x1000010)
+
+    # Run the code and skip errors.
+    try:
+        mu.emu_start(ADDRESS, ADDRESS + len(X86_CODE32))
+    except UcError as e:
+        pass
+
+    print("Emulation done.")
+    compressed = mu.mem_read(0x1000010 + 0x8, len(obfuscated) - 0x8)
+
+except UcError as e:
+    print("ERROR: %s" % e)
+
+fw = open("/path/to/extracted/compressed1.exe", "wb")
+fw.write(compressed)
+fw.close()
+
+The compressed1.exe is further decompressed manually into its final binary file. This would have worked just fine, but rather later I noticed that the PCAP file is missing packets, therefore no proper extraction could be achieved to verify our analysis results 😞.
+
+![]({{site.baseurl}}/_posts/41.png)
 
 
 
