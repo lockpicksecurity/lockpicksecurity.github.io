@@ -15,13 +15,13 @@ The UDP traffic is only domain name resolutions for some interesting web-sites.
 <p><img src="{{site.baseurl}}/images/UDPtraffic.png"></p>
 
 The malware and its components seem to have resolved the following domain name addresses:
-christs-ministries.com
-api.ipify.org
-gosandhegly.com
-mail.voicesinprintpublishing.com
-neubacher.at
-waslohidi.ru
-www.google.com
+- christs-ministries.com
+- api.ipify.org
+- gosandhegly.com
+- mail.voicesinprintpublishing.com
+- neubacher.at
+- waslohidi.ru
+- www.google.com
 
 Now let’s focus on the TCP connections by following the first stream in the PCAP file which shows us the traffic when a user clicks on the link in the phishing e-mail.
 
