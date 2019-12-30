@@ -67,7 +67,7 @@ It decodes to something meaningless so we assume there is a second layer of obfu
 
 We won’t be able to decrypt the traffic towards waslohidi.ru without the server’s private key as it is TLS encrypted.
 
-<p><img src="{{site.baseurl}}/images/14.png"></p>
+<p><a href="{{site.baseurl}}/images/14.png"><img src="{{site.baseurl}}/images/14.png"></a></p>
 
 At this point in time, we could not extract much information from the PCAP file so we’ll focus on the document file that gets downloaded when the user clicks on the phishing URL.
 
@@ -162,7 +162,7 @@ Finally the script is able to resolve all the hashes and mark them appropriately
 Now back to looking into the main functionality of the shellcode.
 After initially resolving some of the addresses of Windows functions, the shellcode will search for the **^YOUHO** magic bytes within loaded by Word’s document file and read 107992 bytes from the end of the magic bytes into a newly allocated buffer.
 
-<p><img src="{{site.baseurl}}/images/27.png"></p>
+<p><a href="{{site.baseurl}}/images/27.png"><img src="{{site.baseurl}}/images/27.png"></a></p>
 
 This newly allocated buffer goes through a multi-byte XOR routine and is later Base64 decoded.
 
@@ -179,7 +179,7 @@ Continuing the analysis of the shellcode, we can see that it will spawn an insta
 Since there’s nothing more to look at the shellcode, we turn our attention at the extracted executable to understand its inner-workings.
 After resolving the addresses of Windows API functions, the “injected.exe” malware will generate a unique ID for the system it’s running on, get the username, computer name, external IP address (by sending a request to api.ipify.org) and jump to decoding its RC4 encrypted configuration.
 
-<p><img src="{{site.baseurl}}/images/31.png"></p>
+<p><a href="{{site.baseurl}}/images/31.png"><img src="{{site.baseurl}}/images/31.png"></a></p>
 
 The key used to decode the embedded configuration is “8D 60 D3 01 CB 12 4F 4D” which decodes the following configuration data blob:
 
@@ -204,7 +204,7 @@ We immediately recognize the mail.voicesinprintpublishing.com and neubacher.at e
 We now need to understand how the malware interprets this data and what actions are taken as a response to it.
 The switch-table function (offset 0x402170) is where the commands from the servers are interpreted and acted on. We have only seen the options “l”, “b” and “r” in the decoded C2 server list so we will focus on them only.
 
-<p><img src="{{site.baseurl}}/images/35.png"></p>
+<p><a href="{{site.baseurl}}/images/35.png"><img src="{{site.baseurl}}/images/35.png"></a></p>
 
 The option “l” leads to downloading an executable from the C2 server and run it in the memory space of malware’s own process, whereas option “b” will inject the code in svchost.exe process explicitly.
 The routine taken when the option “r” is passed on ultimately leads to the download of an executable from the C2 server into a file on disk and its consequent execution, but let’s take a closer look at it.
@@ -279,7 +279,7 @@ Unfortunately this library produced errors when used in a script, but worked jus
 
 The compressed1.exe is further decompressed manually into its final binary file. This would have worked just fine, but rather later I noticed that the PCAP file is missing packets, therefore no proper extraction could be achieved to verify our analysis results 😞.
 
-<p><img src="{{site.baseurl}}/images/41.png"></p>
+<p><a href="{{site.baseurl}}/images/41.png"><img src="{{site.baseurl}}/images/41.png"></a></p>
 
 Instead, I looked up for another Hancitor PCAP (http://www.malware-traffic-analysis.net/2018/05/15/index3.html) that incorporates all the packets needed to fully extract the executable binaries.
 
