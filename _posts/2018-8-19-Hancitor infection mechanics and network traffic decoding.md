@@ -27,18 +27,6 @@ Now let’s focus on the TCP connections by following the first stream in the PC
 
 <p><img src="{{site.baseurl}}/images/3.png"></p>
 
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-<p><img src=""></p>
-
-
 The full HTTP hyperlink is trimmed from the PCAP but it’s not that important for our analysis.
 We can see that clicking in the link the victim downloads an MS Word document “bofa_payment_167492.doc”
 
@@ -104,37 +92,37 @@ Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some 
 
 <p><img src="{{site.baseurl}}/images/18.png"></p>
 
-**awakened** -> NtAllocateVirtualMemory(
-    IN HANDLE ProcessHandle,         = -1 (self)
-    IN OUT PVOID *BaseAddress,      = 0
-    IN ULONG ZeroBits,                      = 0
-    IN OUT PULONG RegionSize,        = **9352 (0x2488)**
-    IN ULONG AllocationType,            = **4096 (0x1000) = MEM_COMMIT**
-    IN ULONG Protect );                      = **64 (0x40) = PAGE_EXECUTE_READWRITE**
+    **awakened** -> NtAllocateVirtualMemory(
+        IN HANDLE ProcessHandle,         = -1 (self)
+        IN OUT PVOID *BaseAddress,      = 0
+        IN ULONG ZeroBits,                      = 0
+        IN OUT PULONG RegionSize,        = **9352 (0x2488)**
+        IN ULONG AllocationType,            = **4096 (0x1000) = MEM_COMMIT**
+        IN ULONG Protect );                      = **64 (0x40) = PAGE_EXECUTE_READWRITE**
 
 Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
 
 <p><img src="{{site.baseurl}}/images/19.png"></p>
 
-tace ->  NtWriteVirtualMemory(
-  IN HANDLE            ProcessHandle,                                         = -1 (self)
-  IN PVOID                BaseAddress,                = **100139008 (0x5F80000)**
-  IN PVOID                Buffer,                      = 172940788 (0xA4EDDF4)
-  IN ULONG              NumberOfBytesToWrite,                           = **5883 (16FB)**
-  OUT PULONG        NumberOfBytesWritten OPTIONAL );      = 0
+    **tace** ->  NtWriteVirtualMemory(
+      IN HANDLE    ProcessHandle,                   = -1 (self)
+      IN PVOID     BaseAddress,                     = **100139008 (0x5F80000)**
+      IN PVOID     Buffer,                          = 172940788 (0xA4EDDF4)
+      IN ULONG     NumberOfBytesToWrite,            = **5883 (16FB)**
+      OUT PULONG   NumberOfBytesWritten OPTIONAL ); = 0
 
 The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
 <p><img src="{{site.baseurl}}/images/20.png"></p>
 
-**condole** -> CreateTimerQueueTimer(
-  _Out_       PHANDLE             phNewTimer,
-  _In_opt_   HANDLE              TimerQueue,
-  _In_          WAITORTIMERCALLBACK Callback,    = **100143248 (0x5F81090)**
-  _In_opt_   PVOID               Parameter,
-  _In_          DWORD               DueTime,
-  _In_          DWORD               Period,
-  _In_          ULONG               Flags);
+    **condole** -> CreateTimerQueueTimer(
+      _Out_      PHANDLE             phNewTimer,
+      _In_opt_   HANDLE              TimerQueue,
+      _In_       WAITORTIMERCALLBACK Callback,    = **100143248 (0x5F81090)**
+      _In_opt_   PVOID               Parameter,
+      _In_       DWORD               DueTime,
+      _In_       DWORD               Period,
+      _In_       ULONG               Flags);
 
 
 We attach a debugger (x64dbg) to the Winword’s process, go to the 0x5F81090 address and set a breakpoint, so that when the CreateTimeQueueTimer function transfers control to the shellcode’s entry point, we can proceed with our analysis from there. We go to the base of the shellcode 0x5F80000 and save 5883 (16FB) bytes from this address to a file called shellcode.bin for further analysis.
@@ -173,7 +161,7 @@ Finally the script is able to resolve all the hashes and mark them appropriately
 <p><img src="{{site.baseurl}}/images/26.png"></p>
 
 Now back to looking into the main functionality of the shellcode.
-After initially resolving some of the addresses of Windows functions, the shellcode will search for the “**^YOUHO**”magic bytes within loaded by Word’s document file and read 107992 bytes from the end of the magic bytes into a newly allocated buffer.
+After initially resolving some of the addresses of Windows functions, the shellcode will search for the **^YOUHO** magic bytes within loaded by Word’s document file and read 107992 bytes from the end of the magic bytes into a newly allocated buffer.
 
 <p><img src="{{site.baseurl}}/images/27.png"></p>
 
@@ -310,12 +298,3 @@ As we have seen earlier in the PCAP analysis, the C2 server will also return Bas
 As a summary, we were able to understand how the document’s VB Macro code injects a shellcode into WINWORD’s address space, extract it and enrich our analysis with the “shellcode_hash_search.py” plugin. Further we were able to understand how the shellcode extracts and injects an executable file into svchost.exe instance. We were also able to understand the functionality of the injected executable file, decode its configuration, understand its network encoding routines as well as re-implement them using binary instrumentation to decode existing traffic and verify our analysis results.
 
 Happy reversing ;)
-
-
-
-
-
-
-
-
-
