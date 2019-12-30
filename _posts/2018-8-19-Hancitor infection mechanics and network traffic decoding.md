@@ -92,33 +92,33 @@ Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some 
 
 <p><img src="{{site.baseurl}}/images/18.png"></p>
 
-    **awakened** -> NtAllocateVirtualMemory(
+    awakened -> NtAllocateVirtualMemory(
         IN HANDLE ProcessHandle,         = -1 (self)
         IN OUT PVOID *BaseAddress,      = 0
         IN ULONG ZeroBits,                      = 0
-        IN OUT PULONG RegionSize,        = **9352 (0x2488)**
-        IN ULONG AllocationType,            = **4096 (0x1000) = MEM_COMMIT**
-        IN ULONG Protect );                      = **64 (0x40) = PAGE_EXECUTE_READWRITE**
+        IN OUT PULONG RegionSize,        = 9352 (0x2488)
+        IN ULONG AllocationType,            = 4096 (0x1000) = MEM_COMMIT
+        IN ULONG Protect );                      = 64 (0x40) = PAGE_EXECUTE_READWRITE
 
 Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
 
 <p><img src="{{site.baseurl}}/images/19.png"></p>
 
-    **tace** ->  NtWriteVirtualMemory(
+    tace ->  NtWriteVirtualMemory(
       IN HANDLE    ProcessHandle,                   = -1 (self)
-      IN PVOID     BaseAddress,                     = **100139008 (0x5F80000)**
+      IN PVOID     BaseAddress,                     = 100139008 (0x5F80000)
       IN PVOID     Buffer,                          = 172940788 (0xA4EDDF4)
-      IN ULONG     NumberOfBytesToWrite,            = **5883 (16FB)**
+      IN ULONG     NumberOfBytesToWrite,            = 5883 (16FB)
       OUT PULONG   NumberOfBytesWritten OPTIONAL ); = 0
 
 The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
 <p><img src="{{site.baseurl}}/images/20.png"></p>
 
-    **condole** -> CreateTimerQueueTimer(
+    condole -> CreateTimerQueueTimer(
       _Out_      PHANDLE             phNewTimer,
       _In_opt_   HANDLE              TimerQueue,
-      _In_       WAITORTIMERCALLBACK Callback,    = **100143248 (0x5F81090)**
+      _In_       WAITORTIMERCALLBACK Callback,    = 100143248 (0x5F81090)
       _In_opt_   PVOID               Parameter,
       _In_       DWORD               DueTime,
       _In_       DWORD               Period,
@@ -288,9 +288,9 @@ We can also see that there are three executables downloaded in total, which are 
 
 <p><img src="{{site.baseurl}}/images/42.png"></p>
 
-Decoded-1.exe (MD5: 1FB9E41282CA642E52590BF667C7E7DE)
-Decoded-2.exe (MD5: 2B7BE498B4E93D993D654BBE2E70742F)
-Decoded-3.exe (MD5: 836B83895D918F61023CA30361771A5F) – Matches the hash of “2018-05-15-Zeus-Panda-Bancker-caused-by-Hancitor-infection.exe” provided on the http://www.malware-traffic-analysis.net/2018/05/15/index3.html web-site.
+- Decoded-1.exe (MD5: 1FB9E41282CA642E52590BF667C7E7DE)
+- Decoded-2.exe (MD5: 2B7BE498B4E93D993D654BBE2E70742F)
+- Decoded-3.exe (MD5: 836B83895D918F61023CA30361771A5F) – Matches the hash of “2018-05-15-Zeus-Panda-Bancker-caused-by-Hancitor-infection.exe” provided on the http://www.malware-traffic-analysis.net/2018/05/15/index3.html web-site.
 
 As we have seen earlier in the PCAP analysis, the C2 server will also return Base64 encoded commands that will look like “QVEJARRABw==”, “GFUTARRABw==”, etc. Since we now know the first four bytes are ignored, it all boils down to the “ARRABw==” string in all of those communications. This could easily be used as an IoC for network traffic should Hancitor keeps using the same encoding routines. When Base64 decoded and 0x7a XOR-ed, the string is de-obfuscated to “{n:}”, which tells the malware to wait and seek instructions from the C2 server later.
 
