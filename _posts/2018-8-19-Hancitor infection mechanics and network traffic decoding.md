@@ -7,17 +7,12 @@ The purpose of this analysis is to understand the infection mechanics and make s
 
 Looking at the PCAP file's network connection statistics we can see there are 97 TCP and 9 UDP connections in total.
 
-
-<div style="clear: left;">
-    <p><img src="{{ site.baseurl }}/_posts/connectionstatistics.png"></p>
+<div>
+<p><img src="{{site.baseurl}}/images/connectionstatistics.png"></p>
 </div>
-
-
-
-
 The UDP traffic is only domain name resolutions for some interesting web-sites.
 
-<p><img src="{{site.baseurl}}/_posts/UDPtraffic.png"></p>
+<p><img src="{{site.baseurl}}/images/UDPtraffic.png"></p>
 
 The malware and its components seem to have resolved the following domain name addresses:
 christs-ministries.com
@@ -30,7 +25,7 @@ www.google.com
 
 Now let’s focus on the TCP connections by following the first stream in the PCAP file which shows us the traffic when a user clicks on the link in the phishing e-mail.
 
-<p><img src="{{site.baseurl}}/_posts/3.png"></p>
+<p><img src="{{site.baseurl}}/images/3.png"></p>
 <p><img src=""></p>
 <p><img src=""></p>
 <p><img src=""></p>
@@ -43,7 +38,6 @@ Now let’s focus on the TCP connections by following the first stream in the PC
 <p><img src=""></p>
 <p><img src=""></p>
 
-![3.png]({{site.baseurl}}/_posts/3.png)
 
 The full HTTP hyperlink is trimmed from the PCAP but it’s not that important for our analysis.
 We can see that clicking in the link the victim downloads an MS Word document “bofa_payment_167492.doc”
@@ -251,48 +245,48 @@ Looking at the de-obfuscation routine (Offset 0x4015B0), we can see that it’s 
 Despite being rather simple routine to code in python, we’ll use some binary instrumentation to recreate the decoding functionality of the malware. In order to do that we’ll use the unicorn python library which emulates CPU instructions. Since python does not natively support LZNT1 decompression a third party library was used.
 Unfortunately this library produced errors when used in a script, but worked just fine when invoked from the python interpreter directly so only the byte shifting functionality has been ported to python. Below is the code used to re-implement the byte mangling functionality:
 
-from __future__ import print_function
-from unicorn import *
-from unicorn.x86_const import *
+    from __future__ import print_function
+    from unicorn import *
+    from unicorn.x86_const import *
+    
+    f = open("/path/to/extracted/binary1.raw", "rb")
+    obfuscated = f.read()
+    f.close()
 
-f = open("/path/to/extracted/binary1.raw", "rb")
-obfuscated = f.read()
-f.close()
+    # code to be emulated (taken from loc_4015D4)
+    SC = b"\x8B\xC1\x83\xE0\x07\x8A\x04\x30\x30\x04\x31\x41\x3B\xCA\x72\xF0"
 
-# code to be emulated (taken from loc_4015D4)
-SC = b"\x8B\xC1\x83\xE0\x07\x8A\x04\x30\x30\x04\x31\x41\x3B\xCA\x72\xF0"
-
-# Build final code to emulate
-X86_CODE32 = SC + obfuscated![41.png]({{site.baseurl}}/_posts/41.png)
+    # Build final code to emulate
+    X86_CODE32 = SC + obfuscated![41.png]({{site.baseurl}}/_posts/41.png)
 
 
-# memory address where emulation starts
-ADDRESS = 0x1000000
-print("Emulate i386 code")
-try:
+    # memory address where emulation starts
     ADDRESS = 0x1000000
-    mu = Uc(UC_ARCH_X86, UC_MODE_32)
-    mu.mem_map(ADDRESS, 5 * 1024 * 1024) #Allocate 5MB.
-    mu.mem_write(ADDRESS, X86_CODE32)
-    mu.reg_write(UC_X86_REG_ECX, 0x8)
-    mu.reg_write(UC_X86_REG_EDX, len(obfuscated))
-    mu.reg_write(UC_X86_REG_ESI, 0x1000010)
-
-    # Run the code and skip errors.
+    print("Emulate i386 code")
     try:
-        mu.emu_start(ADDRESS, ADDRESS + len(X86_CODE32))
+        ADDRESS = 0x1000000
+        mu = Uc(UC_ARCH_X86, UC_MODE_32)
+        mu.mem_map(ADDRESS, 5 * 1024 * 1024) #Allocate 5MB.
+        mu.mem_write(ADDRESS, X86_CODE32)
+        mu.reg_write(UC_X86_REG_ECX, 0x8)
+        mu.reg_write(UC_X86_REG_EDX, len(obfuscated))
+        mu.reg_write(UC_X86_REG_ESI, 0x1000010)
+
+        # Run the code and skip errors.
+        try:
+            mu.emu_start(ADDRESS, ADDRESS + len(X86_CODE32))
+        except UcError as e:
+            pass
+
+        print("Emulation done.")
+        compressed = mu.mem_read(0x1000010 + 0x8, len(obfuscated) - 0x8)
+
     except UcError as e:
-        pass
+        print("ERROR: %s" % e)
 
-    print("Emulation done.")
-    compressed = mu.mem_read(0x1000010 + 0x8, len(obfuscated) - 0x8)
-
-except UcError as e:
-    print("ERROR: %s" % e)
-
-fw = open("/path/to/extracted/compressed1.exe", "wb")
-fw.write(compressed)
-fw.close()
+    fw = open("/path/to/extracted/compressed1.exe", "wb")
+    fw.write(compressed)
+    fw.close()
 
 The compressed1.exe is further decompressed manually into its final binary file. This would have worked just fine, but rather later I noticed that the PCAP file is missing packets, therefore no proper extraction could be achieved to verify our analysis results 😞.
 
