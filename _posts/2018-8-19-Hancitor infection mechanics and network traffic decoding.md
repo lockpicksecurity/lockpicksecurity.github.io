@@ -144,6 +144,8 @@ In shellcode and other obfuscated code, in order to hide functionality, maliciou
 
 The hashing routine is located in function sub_E07 (offset 0x0E07) and incorporates some byte shifting and XOR-ing routines that we re-implement in the make_sc_hash_db.py file by adding the following python code:
 
+<p><img src="{{site.baseurl}}/images/25.png"></p>
+
     def customHancitor(inString,fName):
         val = 0
         for i in inString:
@@ -154,9 +156,6 @@ The hashing routine is located in function sub_E07 (offset 0x0E07) and incorpora
 We also need to add it in the HASH_TYPES list of tuples and re-create the database file.
 
 Finally the script is able to resolve all the hashes and mark them appropriately in the IDA database file:
-
-
-<p><img src="{{site.baseurl}}/images/25.png"></p>
 
 <p><img src="{{site.baseurl}}/images/26.png"></p>
 
