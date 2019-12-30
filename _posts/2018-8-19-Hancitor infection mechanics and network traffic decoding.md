@@ -81,7 +81,7 @@ Upon enabling Macros, Word will automatically execute the Document_Open() functi
 
 We see that the code will transfer control to the “eyesonly” function, but let’s look around the code first. We see that there are some interesting alias assignments in the “ahtungs”, “barbarian” and “foxitr” modules of the VB code.
 
-<p><img src="{{site.baseurl}}/images/17.png"></p>
+<p><a href="{{site.baseurl}}/images/17.png"><img src="{{site.baseurl}}/images/17.png"></a></p>
 
 The “tace”, “awakened” and “condole” aliases are assigned to the NtWriteVirtualMemory, NtAllocateVirtualMemory and CreateTimeQueueTimer windows functions accordingly.
 
@@ -93,12 +93,12 @@ Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some 
 <p><img src="{{site.baseurl}}/images/18.png"></p>
 
     awakened -> NtAllocateVirtualMemory(
-        IN HANDLE ProcessHandle,         = -1 (self)
-        IN OUT PVOID *BaseAddress,      = 0
-        IN ULONG ZeroBits,                      = 0
-        IN OUT PULONG RegionSize,        = 9352 (0x2488)
-        IN ULONG AllocationType,            = 4096 (0x1000) = MEM_COMMIT
-        IN ULONG Protect );                      = 64 (0x40) = PAGE_EXECUTE_READWRITE
+        IN HANDLE ProcessHandle,     = -1 (self)
+        IN OUT PVOID *BaseAddress,   = 0
+        IN ULONG ZeroBits,           = 0
+        IN OUT PULONG RegionSize,    = 9352 (0x2488)
+        IN ULONG AllocationType,     = 4096 (0x1000) = MEM_COMMIT
+        IN ULONG Protect );          = 64 (0x40) = PAGE_EXECUTE_READWRITE
 
 Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
 
