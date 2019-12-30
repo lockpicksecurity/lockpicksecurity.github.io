@@ -26,3 +26,50 @@ Now let’s focus on the TCP connections by following the first stream in the PC
 
 ![]({{site.baseurl}}/https://raw.githubusercontent.com/lockpicksecurity/lockpicksecurity.github.io/master/_posts/3.png)
 ![3.png]({{site.baseurl}}/_posts/3.png)
+
+The full HTTP hyperlink is trimmed from the PCAP but it’s not that important for our analysis.
+We can see that clicking in the link the victim downloads an MS Word document “bofa_payment_167492.doc”
+
+The next stream shows us the malware obtaining the externally visible IP address of the victim through the api.ipify.org web service.
+
+![4.png]({{site.baseurl}}/_posts/4.png)
+
+In the next stream we see the malware making an HTTP POST request against “gosandhegly.com/ls5/forum.php” submitting in clear text system information data from the sandbox machine.
+
+![5.png]({{site.baseurl}}/_posts/5.png)
+
+As a response to that POST request, the server sends back Base64 encoded data to the victim’s machine. As it turns out the “43c” in the returned data is the hexadecimal representation of the length of the Base64 string. The zero character at the end is likely marking the end of the encoded string. We can safely ignore these and just extract the Base64 encoded data for now.
+
+![6.png]({{site.baseurl}}/_posts/6.png)
+![7.png]({{site.baseurl}}/_posts/7.png)
+
+Unfortunately running the data through a Base64 decoding routine doesn’t seem to produce any clear text or meaningful data so we’ll leave it for now.
+
+The next network stream is a GET request towards the “mail.voicesinprintpublishing.com” web-site but the returned by the server data is still meaningless as it’s obfuscated in some way.
+
+![8.png]({{site.baseurl}}/_posts/8.png)
+
+The following few streams seem to contain obfuscated data so we can’t tell what is being communicated.
+
+![9.png]({{site.baseurl}}/_posts/9.png)
+
+![10.png]({{site.baseurl}}/_posts/10.png)
+![11.png]({{site.baseurl}}/_posts/11.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
