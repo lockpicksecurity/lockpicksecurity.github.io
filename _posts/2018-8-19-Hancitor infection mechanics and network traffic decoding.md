@@ -111,11 +111,74 @@ tace ->  NtWriteVirtualMemory(
 
 The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
+![20.png]({{site.baseurl}}/_posts/20.png)
+
+**condole** -> CreateTimerQueueTimer(
+  _Out_       PHANDLE             phNewTimer,
+  _In_opt_   HANDLE              TimerQueue,
+  _In_          WAITORTIMERCALLBACK Callback,    = **100143248 (0x5F81090)**
+  _In_opt_   PVOID               Parameter,
+  _In_          DWORD               DueTime,
+  _In_          DWORD               Period,
+  _In_          ULONG               Flags);
 
 
+We attach a debugger (x64dbg) to the Winword’s process, go to the 0x5F81090 address and set a breakpoint, so that when the CreateTimeQueueTimer function transfers control to the shellcode’s entry point, we can proceed with our analysis from there. We go to the base of the shellcode 0x5F80000 and save 5883 (16FB) bytes from this address to a file called shellcode.bin for further analysis.
+
+Once we’re done with the static code analysis of the shellcode, we can continue with its dynamic analysis in the debugger. The only thing left is to allow the VB debugger of WINWORD to continue execution so we can hit the breakpoint at the shellcode’s entry point.
+
+![21.png]({{site.baseurl}}/_posts/21.png)
+
+Loading the shellcode.bin file in IDA Pro for static analysis doesn’t seem to recognize our entry point at offset 0x1090 as a function, so we’ll have to create one manually and name it “Main”.
+
+![22.png]({{site.baseurl}}/_posts/22.png)
+
+We turn our attention towards the first function call in Main - sub_F01, which seems to accept one interesting and hardcoded parameter. In fact, there are 19 locations within the shellcode where this function is called in with similar values so I’ll rename it to “resoveAPIhash” for now.
+
+![23.png]({{site.baseurl}}/_posts/23.png)
+
+In shellcode and other obfuscated code, in order to hide functionality, malicious code authors hide function names by pre-calculating hash values of their names and compare them with the generated during runtime hash values in order to obtain their addresses and achieve stealth. Since they don’t always go for re-inventing the wheel, they utilize known and available algorithms. The FLARE guys at Mandiant/FireEye used this to their advantage and created the “shellcode_hash_search.py” plugin for IDA Pro to search for such known hashes within the shellcode’s body and mark them accordingly (https://github.com/fireeye/flare-ida/tree/master/python/flare). For the majority of shellcode I have seen in the wild it does a pretty good job. However in this particular example it didn’t find anything. Since the plugin is dependent on an SQLite database file containing pre-calculated hash values, the FLARE guys offer the ability to generate one yourself using the “make_sc_hash_db.py” file. In this case we will try and find the hashing routine, understand the logic behind it, re-implement in FireEye’s script and generate a new database file to use with the plugin.
 
 
+The hashing routine is located in function sub_E07 (offset 0x0E07) and incorporates some byte shifting and XOR-ing routines that we re-implement in the make_sc_hash_db.py file by adding the following python code:
 
+_def customHancitor(inString,fName):
+    val = 0
+    for i in inString:
+        val = ord(i) ^ ((val >> 0x18) | (val << 0x7))
+        val &= 0xFFFFFFFF
+    return val
+_
+We also need to add it in the HASH_TYPES list of tuples and re-create the database file.
+
+Finally the script is able to resolve all the hashes and mark them appropriately in the IDA database file:
+
+
+![25.png]({{site.baseurl}}/_posts/25.png)
+
+![26.png]({{site.baseurl}}/_posts/26.png)
+
+Now back to looking into the main functionality of the shellcode.
+After initially resolving some of the addresses of Windows functions, the shellcode will search for the “**^YOUHO**”magic bytes within loaded by Word’s document file and read 107992 bytes from the end of the magic bytes into a newly allocated buffer.
+
+![27.png]({{site.baseurl}}/_posts/27.png)
+
+This newly allocated buffer goes through a multi-byte XOR routine and is later Base64 decoded.
+
+![28.png]({{site.baseurl}}/_posts/28.png)
+
+In order to extract the executable file we set a breakpoint in the debugger’s where the Base64Decode function is called (offset 0x05F812E8) and we can either get the Base64 string and decode it ourselves or allow the shellcode to do this for us in order to obtain the encoded executable file. We’ll name that executable file “injected.exe”
+
+![29.png]({{site.baseurl}}/_posts/29.png)
+
+Continuing the analysis of the shellcode, we can see that it will spawn an instance of svchost.exe (x86 or x64 depending on MS Word’s version) in a suspended state and perform a process hollowing injection of the newly extracted executable into it.
+
+![30.png]({{site.baseurl}}/_posts/30.png)
+
+Since there’s nothing more to look at the shellcode, we turn our attention at the extracted executable to understand its inner-workings.
+After resolving the addresses of Windows API functions, the “injected.exe” malware will generate a unique ID for the system it’s running on, get the username, computer name, external IP address (by sending a request to api.ipify.org) and jump to decoding its RC4 encrypted configuration.
+
+![31.png]({{site.baseurl}}/_posts/31.png)
 
 
 
