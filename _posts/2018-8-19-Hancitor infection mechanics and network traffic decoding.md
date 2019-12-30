@@ -7,11 +7,12 @@ The purpose of this analysis is to understand the infection mechanics and make s
 
 Looking at the PCAP file's network connection statistics we can see there are 97 TCP and 9 UDP connections in total.
 
-![connectionstatistics.png]({{site.baseurl}}/_posts/connectionstatistics.png)
+
+ <p><img src="{{site.baseurl}}/_posts/connectionstatistics.png"></p>
 
 The UDP traffic is only domain name resolutions for some interesting web-sites.
 
-![UDPtraffic.png]({{site.baseurl}}/_posts/UDPtraffic.png)
+<p><img src="{{site.baseurl}}/_posts/UDPtraffic.png"></p>
 
 The malware and its components seem to have resolved the following domain name addresses:
 christs-ministries.com
@@ -24,7 +25,19 @@ www.google.com
 
 Now let’s focus on the TCP connections by following the first stream in the PCAP file which shows us the traffic when a user clicks on the link in the phishing e-mail.
 
-![]({{site.baseurl}}/https://raw.githubusercontent.com/lockpicksecurity/lockpicksecurity.github.io/master/_posts/3.png)
+<p><img src="{{site.baseurl}}/_posts/3.png"></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+<p><img src=""></p>
+
 ![3.png]({{site.baseurl}}/_posts/3.png)
 
 The full HTTP hyperlink is trimmed from the PCAP but it’s not that important for our analysis.
