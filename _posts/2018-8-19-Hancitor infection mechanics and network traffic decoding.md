@@ -57,6 +57,59 @@ The following few streams seem to contain obfuscated data so we can’t tell wha
 ![11.png]({{site.baseurl}}/_posts/11.png)
 
 
+In following communication with the gosandhegly.com C2 server, the returned data again looks Base64 encoded, but is rather small in size.
+
+![12.png]({{site.baseurl}}/_posts/12.png)
+
+It decodes to something meaningless so we assume there is a second layer of obfuscation applied against this data.
+![13.png]({{site.baseurl}}/_posts/13.png)
+
+We won’t be able to decrypt the traffic towards waslohidi.ru without the server’s private key as it is TLS encrypted.
+![14.png]({{site.baseurl}}/_posts/14.png)
+
+At this point in time, we could not extract much information from the PCAP file so we’ll focus on the document file that gets downloaded when the user clicks on the phishing URL.
+
+We open the document in a safe environment and see it’s asking the user to enable its embedded VB Macro code.
+
+![15.png]({{site.baseurl}}/_posts/15.png)
+
+Upon enabling Macros, Word will automatically execute the Document_Open() function which is the entry point to the malicious code.
+
+![16.png]({{site.baseurl}}/_posts/16.png)
+
+We see that the code will transfer control to the “eyesonly” function, but let’s look around the code first. We see that there are some interesting alias assignments in the “ahtungs”, “barbarian” and “foxitr” modules of the VB code.
+
+![17.png]({{site.baseurl}}/_posts/17.png)
+
+The “tace”, “awakened” and “condole” aliases are assigned to the NtWriteVirtualMemory, NtAllocateVirtualMemory and CreateTimeQueueTimer windows functions accordingly.
+
+The CreateTimeQueueTimer (condole) function is interesting because the third parameter passed to it is a pointer to a callback function which will be executed when the timer expires. Combining this functionality with the other two functions together could be associated with code injection. That is why we set breakpoints in the VB code where they are called and allow the VB Macro code to run.
+
+The first hit is for tace (NtWriteVirtualMemory) but it doesn’t have much to do with the code injection itself.
+Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some memory region within the address space of WINWORD.exe with Read/Write/Execute permissions.
+
+![18.png]({{site.baseurl}}/_posts/18.png)
+
+**awakened** -> NtAllocateVirtualMemory(
+    IN HANDLE ProcessHandle,         = -1 (self)
+    IN OUT PVOID *BaseAddress,      = 0
+    IN ULONG ZeroBits,                      = 0
+    IN OUT PULONG RegionSize,        = **9352 (0x2488)**
+    IN ULONG AllocationType,            = **4096 (0x1000) = MEM_COMMIT**
+    IN ULONG Protect );                      = **64 (0x40) = PAGE_EXECUTE_READWRITE**
+
+Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
+
+![19.png]({{site.baseurl}}/_posts/19.png)
+
+tace ->  NtWriteVirtualMemory(
+  IN HANDLE            ProcessHandle,                                         = -1 (self)
+  IN PVOID                BaseAddress,                = **100139008 (0x5F80000)**
+  IN PVOID                Buffer,                      = 172940788 (0xA4EDDF4)
+  IN ULONG              NumberOfBytesToWrite,                           = **5883 (16FB)**
+  OUT PULONG        NumberOfBytesWritten OPTIONAL );      = 0
+
+The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
 
 
