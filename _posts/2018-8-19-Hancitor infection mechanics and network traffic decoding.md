@@ -7,9 +7,14 @@ The purpose of this analysis is to understand the infection mechanics and make s
 
 Looking at the PCAP file's network connection statistics we can see there are 97 TCP and 9 UDP connections in total.
 
-<div>
-<p><img src="{{site.baseurl}}/_posts/connectionstatistics.png"></p>
+
+<div style="clear: left;">
+    <p><img src="{{ site.baseurl }}/_posts/connectionstatistics.png"></p>
 </div>
+
+
+
+
 The UDP traffic is only domain name resolutions for some interesting web-sites.
 
 <p><img src="{{site.baseurl}}/_posts/UDPtraffic.png"></p>
