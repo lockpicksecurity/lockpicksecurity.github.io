@@ -26,7 +26,7 @@ www.google.com
 Now let’s focus on the TCP connections by following the first stream in the PCAP file which shows us the traffic when a user clicks on the link in the phishing e-mail.
 
 <p><img src="{{site.baseurl}}/images/3.png"></p>
-<p><img src=""></p>
+
 <p><img src=""></p>
 <p><img src=""></p>
 <p><img src=""></p>
@@ -44,54 +44,56 @@ We can see that clicking in the link the victim downloads an MS Word document �
 
 The next stream shows us the malware obtaining the externally visible IP address of the victim through the api.ipify.org web service.
 
-![4.png]({{site.baseurl}}/_posts/4.png)
+<p><img src="{{site.baseurl}}/images/4.png"></p>
 
 In the next stream we see the malware making an HTTP POST request against “gosandhegly.com/ls5/forum.php” submitting in clear text system information data from the sandbox machine.
 
-![5.png]({{site.baseurl}}/_posts/5.png)
+<p><img src="{{site.baseurl}}/images/5.png"></p>
 
 As a response to that POST request, the server sends back Base64 encoded data to the victim’s machine. As it turns out the “43c” in the returned data is the hexadecimal representation of the length of the Base64 string. The zero character at the end is likely marking the end of the encoded string. We can safely ignore these and just extract the Base64 encoded data for now.
 
-![6.png]({{site.baseurl}}/_posts/6.png)
-![7.png]({{site.baseurl}}/_posts/7.png)
+<p><img src="{{site.baseurl}}/images/6.png"></p>
+<p><img src="{{site.baseurl}}/images/7.png"></p>
 
 Unfortunately running the data through a Base64 decoding routine doesn’t seem to produce any clear text or meaningful data so we’ll leave it for now.
 
 The next network stream is a GET request towards the “mail.voicesinprintpublishing.com” web-site but the returned by the server data is still meaningless as it’s obfuscated in some way.
 
-![8.png]({{site.baseurl}}/_posts/8.png)
+<p><img src="{{site.baseurl}}/images/8.png"></p>
 
 The following few streams seem to contain obfuscated data so we can’t tell what is being communicated.
 
-![9.png]({{site.baseurl}}/_posts/9.png)
+<p><img src="{{site.baseurl}}/images/9.png"></p>
 
-![10.png]({{site.baseurl}}/_posts/10.png)
-![11.png]({{site.baseurl}}/_posts/11.png)
+<p><img src="{{site.baseurl}}/images/10.png"></p>
 
+<p><img src="{{site.baseurl}}/images/11.png"></p>
 
 In following communication with the gosandhegly.com C2 server, the returned data again looks Base64 encoded, but is rather small in size.
 
-![12.png]({{site.baseurl}}/_posts/12.png)
+<p><img src="{{site.baseurl}}/images/12.png"></p>
 
 It decodes to something meaningless so we assume there is a second layer of obfuscation applied against this data.
-![13.png]({{site.baseurl}}/_posts/13.png)
+
+<p><img src="{{site.baseurl}}/images/13.png"></p>
 
 We won’t be able to decrypt the traffic towards waslohidi.ru without the server’s private key as it is TLS encrypted.
-![14.png]({{site.baseurl}}/_posts/14.png)
+
+<p><img src="{{site.baseurl}}/images/14.png"></p>
 
 At this point in time, we could not extract much information from the PCAP file so we’ll focus on the document file that gets downloaded when the user clicks on the phishing URL.
 
 We open the document in a safe environment and see it’s asking the user to enable its embedded VB Macro code.
 
-![15.png]({{site.baseurl}}/_posts/15.png)
+<p><img src="{{site.baseurl}}/images/15.png"></p>
 
 Upon enabling Macros, Word will automatically execute the Document_Open() function which is the entry point to the malicious code.
 
-![16.png]({{site.baseurl}}/_posts/16.png)
+<p><img src="{{site.baseurl}}/images/16.png"></p>
 
 We see that the code will transfer control to the “eyesonly” function, but let’s look around the code first. We see that there are some interesting alias assignments in the “ahtungs”, “barbarian” and “foxitr” modules of the VB code.
 
-![17.png]({{site.baseurl}}/_posts/17.png)
+<p><img src="{{site.baseurl}}/images/17.png"></p>
 
 The “tace”, “awakened” and “condole” aliases are assigned to the NtWriteVirtualMemory, NtAllocateVirtualMemory and CreateTimeQueueTimer windows functions accordingly.
 
@@ -100,7 +102,7 @@ The CreateTimeQueueTimer (condole) function is interesting because the third par
 The first hit is for tace (NtWriteVirtualMemory) but it doesn’t have much to do with the code injection itself.
 Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some memory region within the address space of WINWORD.exe with Read/Write/Execute permissions.
 
-![18.png]({{site.baseurl}}/_posts/18.png)
+<p><img src="{{site.baseurl}}/images/18.png"></p>
 
 **awakened** -> NtAllocateVirtualMemory(
     IN HANDLE ProcessHandle,         = -1 (self)
@@ -112,7 +114,7 @@ Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some 
 
 Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
 
-![19.png]({{site.baseurl}}/_posts/19.png)
+<p><img src="{{site.baseurl}}/images/19.png"></p>
 
 tace ->  NtWriteVirtualMemory(
   IN HANDLE            ProcessHandle,                                         = -1 (self)
@@ -123,7 +125,7 @@ tace ->  NtWriteVirtualMemory(
 
 The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
-![20.png]({{site.baseurl}}/_posts/20.png)
+<p><img src="{{site.baseurl}}/images/20.png"></p>
 
 **condole** -> CreateTimerQueueTimer(
   _Out_       PHANDLE             phNewTimer,
@@ -139,62 +141,62 @@ We attach a debugger (x64dbg) to the Winword’s process, go to the 0x5F81090 ad
 
 Once we’re done with the static code analysis of the shellcode, we can continue with its dynamic analysis in the debugger. The only thing left is to allow the VB debugger of WINWORD to continue execution so we can hit the breakpoint at the shellcode’s entry point.
 
-![21.png]({{site.baseurl}}/_posts/21.png)
+<p><img src="{{site.baseurl}}/images/21.png"></p>
 
 Loading the shellcode.bin file in IDA Pro for static analysis doesn’t seem to recognize our entry point at offset 0x1090 as a function, so we’ll have to create one manually and name it “Main”.
 
-![22.png]({{site.baseurl}}/_posts/22.png)
+<p><img src="{{site.baseurl}}/images/22.png"></p>
 
 We turn our attention towards the first function call in Main - sub_F01, which seems to accept one interesting and hardcoded parameter. In fact, there are 19 locations within the shellcode where this function is called in with similar values so I’ll rename it to “resoveAPIhash” for now.
 
-![23.png]({{site.baseurl}}/_posts/23.png)
+<p><img src="{{site.baseurl}}/images/23.png"></p>
 
 In shellcode and other obfuscated code, in order to hide functionality, malicious code authors hide function names by pre-calculating hash values of their names and compare them with the generated during runtime hash values in order to obtain their addresses and achieve stealth. Since they don’t always go for re-inventing the wheel, they utilize known and available algorithms. The FLARE guys at Mandiant/FireEye used this to their advantage and created the “shellcode_hash_search.py” plugin for IDA Pro to search for such known hashes within the shellcode’s body and mark them accordingly (https://github.com/fireeye/flare-ida/tree/master/python/flare). For the majority of shellcode I have seen in the wild it does a pretty good job. However in this particular example it didn’t find anything. Since the plugin is dependent on an SQLite database file containing pre-calculated hash values, the FLARE guys offer the ability to generate one yourself using the “make_sc_hash_db.py” file. In this case we will try and find the hashing routine, understand the logic behind it, re-implement in FireEye’s script and generate a new database file to use with the plugin.
 
 
 The hashing routine is located in function sub_E07 (offset 0x0E07) and incorporates some byte shifting and XOR-ing routines that we re-implement in the make_sc_hash_db.py file by adding the following python code:
 
-_def customHancitor(inString,fName):
-    val = 0
-    for i in inString:
-        val = ord(i) ^ ((val >> 0x18) | (val << 0x7))
-        val &= 0xFFFFFFFF
-    return val
-_
+    def customHancitor(inString,fName):
+        val = 0
+        for i in inString:
+            val = ord(i) ^ ((val >> 0x18) | (val << 0x7))
+            val &= 0xFFFFFFFF
+        return val
+        
 We also need to add it in the HASH_TYPES list of tuples and re-create the database file.
 
 Finally the script is able to resolve all the hashes and mark them appropriately in the IDA database file:
 
 
-![25.png]({{site.baseurl}}/_posts/25.png)
+<p><img src="{{site.baseurl}}/images/25.png"></p>
 
-![26.png]({{site.baseurl}}/_posts/26.png)
+<p><img src="{{site.baseurl}}/images/26.png"></p>
 
 Now back to looking into the main functionality of the shellcode.
 After initially resolving some of the addresses of Windows functions, the shellcode will search for the “**^YOUHO**”magic bytes within loaded by Word’s document file and read 107992 bytes from the end of the magic bytes into a newly allocated buffer.
 
-![27.png]({{site.baseurl}}/_posts/27.png)
+<p><img src="{{site.baseurl}}/images/27.png"></p>
 
 This newly allocated buffer goes through a multi-byte XOR routine and is later Base64 decoded.
 
-![28.png]({{site.baseurl}}/_posts/28.png)
+<p><img src="{{site.baseurl}}/images/28.png"></p>
 
 In order to extract the executable file we set a breakpoint in the debugger’s where the Base64Decode function is called (offset 0x05F812E8) and we can either get the Base64 string and decode it ourselves or allow the shellcode to do this for us in order to obtain the encoded executable file. We’ll name that executable file “injected.exe”
 
-![29.png]({{site.baseurl}}/_posts/29.png)
+<p><img src="{{site.baseurl}}/images/29.png"></p>
 
 Continuing the analysis of the shellcode, we can see that it will spawn an instance of svchost.exe (x86 or x64 depending on MS Word’s version) in a suspended state and perform a process hollowing injection of the newly extracted executable into it.
 
-![30.png]({{site.baseurl}}/_posts/30.png)
+<p><img src="{{site.baseurl}}/images/30.png"></p>
 
 Since there’s nothing more to look at the shellcode, we turn our attention at the extracted executable to understand its inner-workings.
 After resolving the addresses of Windows API functions, the “injected.exe” malware will generate a unique ID for the system it’s running on, get the username, computer name, external IP address (by sending a request to api.ipify.org) and jump to decoding its RC4 encrypted configuration.
 
-![31.png]({{site.baseurl}}/_posts/31.png)
+<p><img src="{{site.baseurl}}/images/31.png"></p>
 
 The key used to decode the embedded configuration is “8D 60 D3 01 CB 12 4F 4D” which decodes the following configuration data blob:
 
-![32.png]({{site.baseurl}}/_posts/32.png)
+<p><img src="{{site.baseurl}}/images/32.png"></p>
 
 It does seem to contain the initial C2 servers (divided by the pipe symbol) as well as the version of the Hancitor malware – “25phe01”. We have seen the malware contacting only the first C2 server in the PCAP file, but should it have failed, the malware would try contacting the rest of the C2 servers in the list.
 
@@ -204,43 +206,43 @@ After the POST request is sent, the malware will read the response from the serv
 
 As it turns out, the first four bytes of that Base64 string are ignored and whatever is left goes through the de-obfuscation routine –> Base64 decode + XOR with the “0x7A” key.
 
-![33.png]({{site.baseurl}}/_posts/33.png)
+<p><img src="{{site.baseurl}}/images/33.png"></p>
 
 Now we have the knowledge of how to decode this initial traffic and we turn our attention back to the traffic associated with that initial beacon out. After decoding the blob, it seems to contain a big list of what looks like additional C2 servers.
 
-![34.png]({{site.baseurl}}/_posts/34.png)
+<p><img src="{{site.baseurl}}/images/34.png"></p>
 
 We immediately recognize the mail.voicesinprintpublishing.com and neubacher.at entries as we have seen them in the PCAP file.
 
 We now need to understand how the malware interprets this data and what actions are taken as a response to it.
 The switch-table function (offset 0x402170) is where the commands from the servers are interpreted and acted on. We have only seen the options “l”, “b” and “r” in the decoded C2 server list so we will focus on them only.
 
-![35.png]({{site.baseurl}}/_posts/35.png)
+<p><img src="{{site.baseurl}}/images/35.png"></p>
 
 The option “l” leads to downloading an executable from the C2 server and run it in the memory space of malware’s own process, whereas option “b” will inject the code in svchost.exe process explicitly.
 The routine taken when the option “r” is passed on ultimately leads to the download of an executable from the C2 server into a file on disk and its consequent execution, but let’s take a closer look at it.
 
 It mainly downloads and decodes an executable from the C2 channel, writes it to a temp file and runs it.
 
-![36.png]({{site.baseurl}}/_posts/36.png)
+<p><img src="{{site.baseurl}}/images/36.png"></p>
 
 Since we’re interested in how the data is downloaded and decoded from the C2 server as well as how it’s saved and executed we’ll take a look at both functions.
 
 Looking at the “Download_DecodeExecutableFromC2” routine (address 0x401940) we see that the malware would create an HTTP GET request to the first C2 server in the list and contact the rest if no appropriate response is received. The returned back data is checked for the presence of few magic bytes {80 A8 15 54}, which are more than likely the encoded output of the first bytes of an executable file, and if the requirement is satisfied the buffer is passed on for de-obfuscation.
 
-![37.png]({{site.baseurl}}/_posts/37.png)
+<p><img src="{{site.baseurl}}/images/37.png"></p>
 
 These magic bytes are exactly what we have seen in the PCAP as a response from “mail.voicesinprintpublishing.com”
 
-![38.png]({{site.baseurl}}/_posts/38.png)
+<p><img src="{{site.baseurl}}/images/38.png"></p>
 
 The decoded executable would go through the “WriteTmpFileAndExecute” (offset 0x402EA0) function, where it will be saved on disk in the %TEMP% folder with a randomly generated filename, which is always prefixed by the “BN” characters.
 
-![39.png]({{site.baseurl}}/_posts/39.png)
+<p><img src="{{site.baseurl}}/images/39.png"></p>
 
 Looking at the de-obfuscation routine (Offset 0x4015B0), we can see that it’s doing some byte mangling before decompressing it using the LZNT1 format.
 
-![40.png]({{site.baseurl}}/_posts/40.png)
+<p><img src="{{site.baseurl}}/images/40.png"></p>
 
 Despite being rather simple routine to code in python, we’ll use some binary instrumentation to recreate the decoding functionality of the malware. In order to do that we’ll use the unicorn python library which emulates CPU instructions. Since python does not natively support LZNT1 decompression a third party library was used.
 Unfortunately this library produced errors when used in a script, but worked just fine when invoked from the python interpreter directly so only the byte shifting functionality has been ported to python. Below is the code used to re-implement the byte mangling functionality:
@@ -290,14 +292,14 @@ Unfortunately this library produced errors when used in a script, but worked jus
 
 The compressed1.exe is further decompressed manually into its final binary file. This would have worked just fine, but rather later I noticed that the PCAP file is missing packets, therefore no proper extraction could be achieved to verify our analysis results 😞.
 
-![]({{site.baseurl}}/_posts/41.png)
+<p><img src="{{site.baseurl}}/images/41.png"></p>
 
 Instead, I looked up for another Hancitor PCAP (http://www.malware-traffic-analysis.net/2018/05/15/index3.html) that incorporates all the packets needed to fully extract the executable binaries.
 
 This time extracting the three binaries from the PCAP is successful and we can successfully decode them.
 We can also see that there are three executables downloaded in total, which are all part of the infection, but only one of them is accounted for as the final payload on the web-site.
 
-![42.png]({{site.baseurl}}/_posts/42.png)
+<p><img src="{{site.baseurl}}/images/42.png"></p>
 
 Decoded-1.exe (MD5: 1FB9E41282CA642E52590BF667C7E7DE)
 Decoded-2.exe (MD5: 2B7BE498B4E93D993D654BBE2E70742F)
