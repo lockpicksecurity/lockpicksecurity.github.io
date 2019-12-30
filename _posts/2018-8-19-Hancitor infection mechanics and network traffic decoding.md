@@ -280,6 +280,24 @@ The compressed1.exe is further decompressed manually into its final binary file.
 
 ![]({{site.baseurl}}/_posts/41.png)
 
+Instead, I looked up for another Hancitor PCAP (http://www.malware-traffic-analysis.net/2018/05/15/index3.html) that incorporates all the packets needed to fully extract the executable binaries.
+
+This time extracting the three binaries from the PCAP is successful and we can successfully decode them.
+We can also see that there are three executables downloaded in total, which are all part of the infection, but only one of them is accounted for as the final payload on the web-site.
+
+![42.png]({{site.baseurl}}/_posts/42.png)
+
+Decoded-1.exe (MD5: 1FB9E41282CA642E52590BF667C7E7DE)
+Decoded-2.exe (MD5: 2B7BE498B4E93D993D654BBE2E70742F)
+Decoded-3.exe (MD5: 836B83895D918F61023CA30361771A5F) – Matches the hash of “2018-05-15-Zeus-Panda-Bancker-caused-by-Hancitor-infection.exe” provided on the http://www.malware-traffic-analysis.net/2018/05/15/index3.html web-site.
+
+As we have seen earlier in the PCAP analysis, the C2 server will also return Base64 encoded commands that will look like “QVEJARRABw==”, “GFUTARRABw==”, etc. Since we now know the first four bytes are ignored, it all boils down to the “ARRABw==” string in all of those communications. This could easily be used as an IoC for network traffic should Hancitor keeps using the same encoding routines. When Base64 decoded and 0x7a XOR-ed, the string is de-obfuscated to “{n:}”, which tells the malware to wait and seek instructions from the C2 server later.
+
+As a summary, we were able to understand how the document’s VB Macro code injects a shellcode into WINWORD’s address space, extract it and enrich our analysis with the “shellcode_hash_search.py” plugin. Further we were able to understand how the shellcode extracts and injects an executable file into svchost.exe instance. We were also able to understand the functionality of the injected executable file, decode its configuration, understand its network encoding routines as well as re-implement them using binary instrumentation to decode existing traffic and verify our analysis results.
+
+Happy reversing ;)
+
+
 
 
 
