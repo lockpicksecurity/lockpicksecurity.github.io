@@ -248,7 +248,7 @@ Unfortunately this library produced errors when used in a script, but worked jus
     SC = b"\x8B\xC1\x83\xE0\x07\x8A\x04\x30\x30\x04\x31\x41\x3B\xCA\x72\xF0"
 
     # Build final code to emulate
-    X86_CODE32 = SC + obfuscated![41.png]({{site.baseurl}}/_posts/41.png)
+    X86_CODE32 = SC + obfuscated)
 
 
     # memory address where emulation starts
