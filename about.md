@@ -35,7 +35,7 @@ My training and qualifications include:
 - New Horizons "Hands-on Computer Forensics Workshop", January 2011
 
 ### Vendor specific:
-
+- Autopsy "Autopsy 8-Hour Online Training", April 2020
 - Splunk "Splunk 7.x Fundamentals Part 1", June 2019
 - Tanium "Tanium Foundation, Operations, & IR Deep Dive", April 2018
 - Qualys "Vulnerability Management", March 2018
