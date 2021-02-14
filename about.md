@@ -9,7 +9,7 @@ published: true
 
 ![Our Approach]({{site.baseurl}}/working_environment-300x168.jpg)
 
-Lock Pick Security Ltd is a research-led company providing unique approach in combating adversaries. It is found by Kiril Manasiev who has over 9 years of experience in fighting nation state threat actors and other adversaries in the front line trenches of Incident Response. Over the years he has applied that same unique approach which you will get once you engage us to protect your environment.
+Lock Pick Security Ltd is a research-led company providing unique approach in combating adversaries. It is found by Kiril Manasiev who is fighting nation state threat actors and other adversaries in the front line trenches of Incident Response since 2010. Over the years he has applied that same unique approach which you will get once you engage us to protect your environment.
 
 
 
@@ -45,4 +45,13 @@ My training and qualifications include:
 - Bit9 "Carbon Black", January 2015
 - FireEye "NX, EX, HX, FX, CM, AX", December 2014
 - Access Data "Resolution One", July 2014
-- McAfee "VirusScan Enterprise, Host Intrusion Prevention, ePolicy Orchestrator, Endpoint Encryption, Data Protection, Foundstone, Groupshield, Policy Auditor, Network Access Control, Solidcore, Risk and Compliance Management, Network Security, Secure Computing", February 2010
+- McAfee "Various product trainings", February 2010
+
+## Astra Manasieva, PhD - Lead Behavioural Analyst
+
+![Astra Manasieva, PhD - Lead Behavioural Analyst]({{site.baseurl}}/Kiril_Manasiev-294x300.jpg)
+
+
+Author of 3 psychological books and multiple articles including profiling of cyber criminals – https://iztok-zapad.eu/kiberpsihologiya.
+
+I combine both psychological and technical approaches in profiling threat actors whilst observing their activities in a simulated corporate environment (honeypot network) to understand threat actors’ experience based on behaviour, complexity of attack methods and ultimate goals.
