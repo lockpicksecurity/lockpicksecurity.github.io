@@ -52,6 +52,6 @@ My training and qualifications include:
 ![Astra Manasieva, PhD - Lead Behavioural Analyst]({{site.baseurl}}/Kiril_Manasiev-294x300.jpg)
 
 
-Author of 3 psychological books and multiple articles including profiling of cyber criminals – https://iztok-zapad.eu/kiberpsihologiya.
+Author of 3 psychological books and multiple articles including profiling of cyber criminals (![Purchase here](https://iztok-zapad.eu/kiberpsihologiya)).
 
 I combine both psychological and technical approaches in profiling threat actors whilst observing their activities in a simulated corporate environment (honeypot network) to understand threat actors’ experience based on behaviour, complexity of attack methods and ultimate goals.
