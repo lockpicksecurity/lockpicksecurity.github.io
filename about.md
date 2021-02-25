@@ -9,7 +9,7 @@ published: true
 
 ![Our Approach]({{site.baseurl}}/working_environment-300x168.jpg)
 
-Lock Pick Security Ltd is a research-led company providing unique approach in combating adversaries. 
+Lock Pick Security Ltd is a research-led company providing unique and unconventional approach in combating nation state threat actors and cyber criminals. 
 
 
 
