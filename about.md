@@ -17,42 +17,42 @@ Lock Pick Security Ltd is a research-led company providing unique approach in co
 
 
 ### David Hughes - Director
-![David Hughes]({{site.baseurl}}/DavidH.jpg)
+![David Hughes]({{site.baseurl}}/images/team/DavidH.png)
 
 David Bio
 
 ### Astra Manasieva - Lead Behavioural Analyst
-![Astra Manasieva]({{site.baseurl}}/AstraM.jpg)
+![Astra Manasieva]({{site.baseurl}}/images/team/AstraM.png)
 
  Astra Bio
 
 ### Joshua Parsons - Senior Incident Response Investigator
-![Joshua Parsons]({{site.baseurl}}/JoshuaP.jpg)
+![Joshua Parsons]({{site.baseurl}}/images/team/JoshuaP.png)
 
  Josh Bio
 
 ### Jason McNamara - Incident Response Specialist
-![Jason McNamara]({{site.baseurl}}/JasonM.jpg)
+![Jason McNamara]({{site.baseurl}}/images/team/JasonM.png)
 
  Jason Bio
 
 ### Margaret Harvey - Head of HR
-![Margaret Harvey]({{site.baseurl}}/MargaretH.jpg)
+![Margaret Harvey]({{site.baseurl}}/images/team/MargaretH.png)
 
  Margaret Bio
 
 ### Kayda Clarks - Head of Marketing
-![Kayda Clarks]({{site.baseurl}}/KaydaC.jpg)
+![Kayda Clarks]({{site.baseurl}}/images/team/KaydaC.png)
 
  Kayda Bio
 
 ### Vicky Jefferson- Head of Sales
-![Vicky Jefferson]({{site.baseurl}}/VickyJ.jpg)
+![Vicky Jefferson]({{site.baseurl}}/images/team/VickyJ.png)
 
 Vicky Bio
 
 ### Maria Evans - Account Director
-![Maria Evans]({{site.baseurl}}/MariaE.jpg)
+![Maria Evans]({{site.baseurl}}/images/team/MariaE.png)
 
  Maria Bio
 
