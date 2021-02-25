@@ -1,8 +1,8 @@
 ---
 layout: default
-title: About
-permalink: /about/
-published: true
+title: KirilManasiev
+permalink: /KirilManasiev/
+published: False
 ---
 
 ## Our Approach
