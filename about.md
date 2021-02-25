@@ -21,10 +21,12 @@ Lock Pick Security Ltd is a research-led company providing unique approach in co
 
 David Bio
 
-### Astra Manasieva - Lead Behavioural Analyst
+### Astra Manasieva, PhD - Lead Behavioural Analyst
 ![Astra Manasieva]({{site.baseurl}}/images/team/AstraM.PNG)
 
- Astra Bio
+Combines both technical and psychological approaches in profiling nation state threat actors and cyber criminals whilst observing their activities in a simulated environment to evaluate threat actors’ experience and skills based on behaviour, complexity of attack methods and ultimate goals. Astra's unique experience is foundational in developing Lock Pick Security’s adversary deception service offering.
+
+Author of 3 psychological books and multiple articles including cyber criminals profiling – https://iztok-zapad.eu/kiberpsihologiya
 
 ### Joshua Parsons - Senior Incident Response Investigator
 ![Joshua Parsons]({{site.baseurl}}/images/team/JoshuaP.PNG)
