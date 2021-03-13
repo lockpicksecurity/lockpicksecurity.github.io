@@ -30,7 +30,7 @@ Author of 3 psychological books and multiple articles including cyber criminals 
 ### Joshua Parsons - Senior Incident Response Investigator
 ![Joshua Parsons]({{site.baseurl}}/images/team/JoshuaP.PNG)
 
-Joshua is an experienced Secuirty Incident Responder previously working for Fortune 500 companies on a variety of incident investigations. He's a passionate researcher with focus on malware reverse engineeting, exploit analysis and all things forensics. His unique insight into security breaches is foundational in building the Compromise assessment and Network Security Monitoring capabilities at Lock Pick Security. 
+Joshua is an experienced Security Incident Responder previously working for Fortune 500 companies on a variety of incident investigations. He's a passionate researcher with focus on malware reverse engineering, exploit analysis and all things forensics. His unique insight into security breaches is foundational in building the Compromise assessment and Network Security Monitoring capabilities at Lock Pick Security. 
 
 ### Jason McNamara - Incident Response Specialist
 ![Jason McNamara]({{site.baseurl}}/images/team/JasonM.PNG)
