@@ -38,7 +38,7 @@ Joshua is an experienced Secuirty Incident Responder previously working for Fort
 For the past 5 years, Jason has focused on the development of cyber defensive and offensive tools. 
 In his free time, Jason loves solving puzzles and eagerly takes part in any Forensics CTF out on the Internet.
  
-##**Lock Pick Security's Admins:**
+## **Lock Pick Security's Admins:**
 
 ### Margaret Harvey - Head of HR
 ![Margaret Harvey]({{site.baseurl}}/images/team/MargaretH.PNG)
