@@ -93,39 +93,40 @@ The first hit is for tace (NtWriteVirtualMemory) but it doesn’t have much to d
 Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some memory region within the address space of WINWORD.exe with Read/Write/Execute permissions.
 
 <p><img src="{{site.baseurl}}/images/18.png"></p>
-
-    awakened -> NtAllocateVirtualMemory(
-        IN HANDLE ProcessHandle,     = -1 (self)
-        IN OUT PVOID *BaseAddress,   = 0
-        IN ULONG ZeroBits,           = 0
-        IN OUT PULONG RegionSize,    = 9352 (0x2488)
-        IN ULONG AllocationType,     = 4096 (0x1000) = MEM_COMMIT
-        IN ULONG Protect );          = 64 (0x40) = PAGE_EXECUTE_READWRITE
+```
+awakened -> NtAllocateVirtualMemory(
+    IN HANDLE ProcessHandle,     = -1 (self)
+    IN OUT PVOID *BaseAddress,   = 0
+    IN ULONG ZeroBits,           = 0
+    IN OUT PULONG RegionSize,    = 9352 (0x2488)
+    IN ULONG AllocationType,     = 4096 (0x1000) = MEM_COMMIT
+    IN ULONG Protect );          = 64 (0x40) = PAGE_EXECUTE_READWRITE
+```
 
 Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
 
 <p><img src="{{site.baseurl}}/images/19.png"></p>
-
-    tace ->  NtWriteVirtualMemory(
-      IN HANDLE    ProcessHandle,                   = -1 (self)
-      IN PVOID     BaseAddress,                     = 100139008 (0x5F80000)
-      IN PVOID     Buffer,                          = 172940788 (0xA4EDDF4)
-      IN ULONG     NumberOfBytesToWrite,            = 5883 (16FB)
-      OUT PULONG   NumberOfBytesWritten OPTIONAL ); = 0
-
+```
+tace ->  NtWriteVirtualMemory(
+   IN HANDLE    ProcessHandle,                   = -1 (self)
+   IN PVOID     BaseAddress,                     = 100139008 (0x5F80000)
+   IN PVOID     Buffer,                          = 172940788 (0xA4EDDF4)
+   IN ULONG     NumberOfBytesToWrite,            = 5883 (16FB)
+   OUT PULONG   NumberOfBytesWritten OPTIONAL ); = 0
+```
 The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
 <p><a href="{{site.baseurl}}/images/20.png"><img src="{{site.baseurl}}/images/20.png"></a></p>
-
-    condole -> CreateTimerQueueTimer(
-      _Out_      PHANDLE             phNewTimer,
-      _In_opt_   HANDLE              TimerQueue,
-      _In_       WAITORTIMERCALLBACK Callback,    = 100143248 (0x5F81090)
-      _In_opt_   PVOID               Parameter,
-      _In_       DWORD               DueTime,
-      _In_       DWORD               Period,
-      _In_       ULONG               Flags);
-
+```
+condole -> CreateTimerQueueTimer(
+   _Out_      PHANDLE             phNewTimer,
+   _In_opt_   HANDLE              TimerQueue,
+   _In_       WAITORTIMERCALLBACK Callback,    = 100143248 (0x5F81090)
+   _In_opt_   PVOID               Parameter,
+   _In_       DWORD               DueTime,
+   _In_       DWORD               Period,
+   _In_       ULONG               Flags);
+```
 
 We attach a debugger (x64dbg) to the Winword’s process, go to the 0x5F81090 address and set a breakpoint, so that when the CreateTimeQueueTimer function transfers control to the shellcode’s entry point, we can proceed with our analysis from there. We go to the base of the shellcode 0x5F80000 and save 5883 (16FB) bytes from this address to a file called shellcode.bin for further analysis.
 
@@ -147,14 +148,14 @@ In shellcode and other obfuscated code, in order to hide functionality, maliciou
 The hashing routine is located in function sub_E07 (offset 0x0E07) and incorporates some byte shifting and XOR-ing routines that we re-implement in the make_sc_hash_db.py file by adding the following python code:
 
 <p><img src="{{site.baseurl}}/images/25.png"></p>
-
-    def customHancitor(inString,fName):
-        val = 0
-        for i in inString:
-            val = ord(i) ^ ((val >> 0x18) | (val << 0x7))
-            val &= 0xFFFFFFFF
-        return val
-        
+```
+def customHancitor(inString,fName):
+    val = 0
+    for i in inString:
+        val = ord(i) ^ ((val >> 0x18) | (val << 0x7))
+        val &= 0xFFFFFFFF
+    return val
+```
 We also need to add it in the HASH_TYPES list of tuples and re-create the database file.
 
 Finally the script is able to resolve all the hashes and mark them appropriately in the IDA database file:
@@ -236,49 +237,50 @@ Looking at the de-obfuscation routine (Offset 0x4015B0), we can see that it’s 
 Despite being rather simple routine to code in python, we’ll use some binary instrumentation to recreate the decoding functionality of the malware. In order to do that we’ll use the unicorn python library which emulates CPU instructions. Since python does not natively support LZNT1 decompression a third party library was used.
 Unfortunately this library produced errors when used in a script, but worked just fine when invoked from the python interpreter directly so only the byte shifting functionality has been ported to python. Below is the code used to re-implement the byte mangling functionality:
 
-    from __future__ import print_function
-    from unicorn import *
-    from unicorn.x86_const import *
+```
+from __future__ import print_function
+from unicorn import *
+from unicorn.x86_const import *
     
-    f = open("/path/to/extracted/binary1.raw", "rb")
-    obfuscated = f.read()
-    f.close()
+f = open("/path/to/extracted/binary1.raw", "rb")
+obfuscated = f.read()
+f.close()
 
-    # code to be emulated (taken from loc_4015D4)
-    SC = b"\x8B\xC1\x83\xE0\x07\x8A\x04\x30\x30\x04\x31\x41\x3B\xCA\x72\xF0"
+# code to be emulated (taken from loc_4015D4)
+SC = b"\x8B\xC1\x83\xE0\x07\x8A\x04\x30\x30\x04\x31\x41\x3B\xCA\x72\xF0"
 
-    # Build final code to emulate
-    X86_CODE32 = SC + obfuscated)
+# Build final code to emulate
+X86_CODE32 = SC + obfuscated)
 
 
-    # memory address where emulation starts
+# memory address where emulation starts
+ADDRESS = 0x1000000
+print("Emulate i386 code")
+try:
     ADDRESS = 0x1000000
-    print("Emulate i386 code")
+    mu = Uc(UC_ARCH_X86, UC_MODE_32)
+    mu.mem_map(ADDRESS, 5 * 1024 * 1024) #Allocate 5MB.
+    mu.mem_write(ADDRESS, X86_CODE32)
+    mu.reg_write(UC_X86_REG_ECX, 0x8)
+    mu.reg_write(UC_X86_REG_EDX, len(obfuscated))
+    mu.reg_write(UC_X86_REG_ESI, 0x1000010)
+
+    # Run the code and skip errors.
     try:
-        ADDRESS = 0x1000000
-        mu = Uc(UC_ARCH_X86, UC_MODE_32)
-        mu.mem_map(ADDRESS, 5 * 1024 * 1024) #Allocate 5MB.
-        mu.mem_write(ADDRESS, X86_CODE32)
-        mu.reg_write(UC_X86_REG_ECX, 0x8)
-        mu.reg_write(UC_X86_REG_EDX, len(obfuscated))
-        mu.reg_write(UC_X86_REG_ESI, 0x1000010)
-
-        # Run the code and skip errors.
-        try:
-            mu.emu_start(ADDRESS, ADDRESS + len(X86_CODE32))
-        except UcError as e:
-            pass
-
-        print("Emulation done.")
-        compressed = mu.mem_read(0x1000010 + 0x8, len(obfuscated) - 0x8)
-
+        mu.emu_start(ADDRESS, ADDRESS + len(X86_CODE32))
     except UcError as e:
-        print("ERROR: %s" % e)
+         pass
 
-    fw = open("/path/to/extracted/compressed1.exe", "wb")
-    fw.write(compressed)
-    fw.close()
+    print("Emulation done.")
+    compressed = mu.mem_read(0x1000010 + 0x8, len(obfuscated) - 0x8)
 
+except UcError as e:
+    print("ERROR: %s" % e)
+
+fw = open("/path/to/extracted/compressed1.exe", "wb")
+fw.write(compressed)
+fw.close()
+```
 The compressed1.exe is further decompressed manually into its final binary file. This would have worked just fine, but rather later I noticed that the PCAP file is missing packets, therefore no proper extraction could be achieved to verify our analysis results 😞.
 
 <p><a href="{{site.baseurl}}/images/41.png"><img src="{{site.baseurl}}/images/41.png"></a></p>
