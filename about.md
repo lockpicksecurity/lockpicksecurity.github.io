@@ -26,6 +26,10 @@ Lock Pick Security Ltd is a research-led company providing unique and unconventi
 ### Jason McNamara - Incident Response Specialist
 <img style="float: left; padding-right: 10px;" src="{{site.baseurl}}/images/team/JasonM.PNG"> For the past 5 years, Jason has focused on the development of cyber defensive and offensive tools. In his free time, Jason loves solving puzzles and eagerly takes part in any Forensics CTF out on the Internet.
 
+
+
+
+
 ## **Lock Pick Security's Admin team:**
 
 ### Margaret Harvey - Head of HR
