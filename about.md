@@ -17,7 +17,7 @@ Lock Pick Security Ltd is a research-led company providing unique and unconventi
 
 ### David Hughes - Director
 ![David Hughes]({{site.baseurl}}/images/team/DavidH.PNG)
-
+<img align="left" width="100" height="100" src="{{site.baseurl}}/images/team/DavidH.PNG">
 David has spent the last 20 years of his career leading Incident Response and Forensics teams of all sizes across the Public sector. David's hands-on leadership skills landed him leading Lock Pick Security's Incident Response and Forensics practice in support of our customers. David has authored multiple articles on a variety of Computer Forensics topics.
 
 ### Astra Manasieva, PhD - Lead Behavioural Analyst
