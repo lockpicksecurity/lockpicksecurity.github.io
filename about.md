@@ -23,7 +23,7 @@ David has spent the last 20 years of his career leading Incident Response and Fo
 ### Astra Manasieva, PhD - Lead Behavioural Analyst
 ![Astra Manasieva]({{site.baseurl}}/images/team/AstraM.jpg)
 
-Astra combines both technical and psychological approaches in profiling nation state threat actors and cyber criminals whilst observing their activities in a simulated environment to evaluate threat actors’ experience and skills based on behaviour, risk appetite, susceptibility to deception, complexity of attack methods and ultimate goals. Astra's unique experience is foundational in developing Lock Pick Security’s adversary deception service offering. Astra has authored 3 psychological books and multiple articles including profiling cyber criminals  – https://iztok-zapad.eu/kiberpsihologiya
+Astra combines both technical and psychological approaches in profiling nation state threat actors and cyber criminals whilst observing their activities to evaluate their experience and skills based on behaviour, risk appetite, susceptibility to deception, complexity of attack methods and ultimate goals. Astra's unique experience is foundational in developing Lock Pick Security’s adversary deception service offering. Astra has authored 3 psychological books and multiple articles including profiling cyber criminals  – https://iztok-zapad.eu/kiberpsihologiya
 
 ### Joshua Parsons - Senior Incident Response Investigator
 ![Joshua Parsons]({{site.baseurl}}/images/team/JoshuaP.PNG)
