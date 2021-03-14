@@ -24,11 +24,7 @@ Lock Pick Security Ltd is a research-led company providing unique and unconventi
 <img style="float: left; padding-right: 10px;" src="{{site.baseurl}}/images/team/JoshuaP.PNG"> Joshua is an experienced Security Incident Responder previously working for Fortune 500 companies on a variety of incident investigations. He's a passionate researcher with focus on malware reverse engineering, exploit analysis and all things forensics. His unique insight into security breaches is foundational in building the Compromise assessment and Network Security Monitoring capabilities at Lock Pick Security. 
 
 ### Jason McNamara - Incident Response Specialist
-<img style="float: left; padding-right: 10px;" src="{{site.baseurl}}/images/team/JasonM.PNG"> For the past 5 years, Jason has focused on the development of cyber defensive and offensive tools. In his free time, Jason loves solving puzzles and eagerly takes part in any Forensics CTF out on the Internet.
-
-
-
-
+<img style="float: left; padding-right: 10px;" src="{{site.baseurl}}/images/team/JasonM.PNG"> For the past 5 years, Jason has focused on the development of cyber defensive and offensive tools. Jason has developed a few penetration testing tools and has a great deal of experience conducting table-top and purple team exercises. In his free time, Jason loves solving puzzles and eagerly takes part in any Forensics CTF out on the Internet. 
 
 ## **Lock Pick Security's Admin team:**
 
