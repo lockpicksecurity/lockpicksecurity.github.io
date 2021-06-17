@@ -1,7 +1,7 @@
 ---
 layout: default
-title: KirilManasiev
-permalink: /KirilManasiev/
+title: about
+permalink: /about/
 published: False
 ---
 
