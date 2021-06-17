@@ -1,8 +1,8 @@
 ---
 layout: default
-title: about
+title: About
 permalink: /about/
-published: False
+published: true
 ---
 
 ## Our Approach
