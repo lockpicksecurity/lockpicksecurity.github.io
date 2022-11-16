@@ -224,7 +224,7 @@ nav {
   }
 
   a {
-    margin-left: 20px;
+    margin-left: 1px;
     color: #999999;
     text-align: left;
     font-weight: 300;
@@ -232,7 +232,7 @@ nav {
 
     @include mobile {
       margin: 0 10px;
-      color: $blue;
+      color: #999999;
     }
   }
 }
