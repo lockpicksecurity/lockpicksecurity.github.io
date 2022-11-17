@@ -5,6 +5,12 @@ permalink: /about/
 published: true
 ---
 
+<!--
+Where other men blindly follow the truth, Remember, nothing is true.
+Where other men are limited by morality or law, Remember, everything is permitted.
+We work in the dark to serve the light.
+//-->
+
 ## Our Approach
 
 ![Our Approach]({{site.baseurl}}/working_environment-300x168.jpg)
