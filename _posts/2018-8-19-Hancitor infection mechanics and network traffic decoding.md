@@ -93,7 +93,7 @@ The first hit is for tace (NtWriteVirtualMemory) but it doesn’t have much to d
 Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some memory region within the address space of WINWORD.exe with Read/Write/Execute permissions.
 
 <p><img src="{{site.baseurl}}/images/18.png"></p>
-{% highlight %}
+{% highlight c %}
 awakened -> NtAllocateVirtualMemory(
     IN HANDLE ProcessHandle,     = -1 (self)
     IN OUT PVOID *BaseAddress,   = 0
@@ -106,7 +106,7 @@ awakened -> NtAllocateVirtualMemory(
 Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
 
 <p><img src="{{site.baseurl}}/images/19.png"></p>
-{% highlight %}
+{% highlight c %}
 tace ->  NtWriteVirtualMemory(
    IN HANDLE    ProcessHandle,                   = -1 (self)
    IN PVOID     BaseAddress,                     = 100139008 (0x5F80000)
@@ -117,7 +117,7 @@ tace ->  NtWriteVirtualMemory(
 The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
 <p><a href="{{site.baseurl}}/images/20.png"><img src="{{site.baseurl}}/images/20.png"></a></p>
-{% highlight %}
+{% highlight c %}
 condole -> CreateTimerQueueTimer(
    _Out_      PHANDLE             phNewTimer,
    _In_opt_   HANDLE              TimerQueue,
