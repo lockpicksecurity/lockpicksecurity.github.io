@@ -148,7 +148,20 @@ In shellcode and other obfuscated code, in order to hide functionality, maliciou
 The hashing routine is located in function sub_E07 (offset 0x0E07) and incorporates some byte shifting and XOR-ing routines that we re-implement in the make_sc_hash_db.py file by adding the following python code:
 
 <p><img src="{{site.baseurl}}/images/25.png"></p>
-```
+
+
+{% highlight javascript %}
+function sayHello(name) {
+  if (!name) {
+    console.log('Hello World');
+  } else {
+    console.log(`Hello ${name}`);
+  }  
+}  
+{% endhighlight %}
+
+
+```python
 def customHancitor(inString,fName):
     val = 0
     for i in inString:
