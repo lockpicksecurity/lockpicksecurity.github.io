@@ -149,7 +149,6 @@ The hashing routine is located in function sub_E07 (offset 0x0E07) and incorpora
 
 <p><img src="{{site.baseurl}}/images/25.png"></p>
 
-
 {% highlight python %}
 def customHancitor(inString,fName):
     val = 0
