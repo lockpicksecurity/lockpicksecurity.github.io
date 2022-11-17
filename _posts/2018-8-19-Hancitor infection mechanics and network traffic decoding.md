@@ -93,7 +93,7 @@ The first hit is for tace (NtWriteVirtualMemory) but it doesn’t have much to d
 Next hit is for “awakened” – NtAllocateVirtualMemory which allocates some memory region within the address space of WINWORD.exe with Read/Write/Execute permissions.
 
 <p><img src="{{site.baseurl}}/images/18.png"></p>
-```
+{% highlight %}
 awakened -> NtAllocateVirtualMemory(
     IN HANDLE ProcessHandle,     = -1 (self)
     IN OUT PVOID *BaseAddress,   = 0
@@ -101,23 +101,23 @@ awakened -> NtAllocateVirtualMemory(
     IN OUT PULONG RegionSize,    = 9352 (0x2488)
     IN ULONG AllocationType,     = 4096 (0x1000) = MEM_COMMIT
     IN ULONG Protect );          = 64 (0x40) = PAGE_EXECUTE_READWRITE
-```
+{% endhighlight %}
 
 Next hit is for tace (NtWriteVirtualMemory) which will allocate 5883 bytes of shellcode into this newly allocated region.
 
 <p><img src="{{site.baseurl}}/images/19.png"></p>
-```
+{% highlight %}
 tace ->  NtWriteVirtualMemory(
    IN HANDLE    ProcessHandle,                   = -1 (self)
    IN PVOID     BaseAddress,                     = 100139008 (0x5F80000)
    IN PVOID     Buffer,                          = 172940788 (0xA4EDDF4)
    IN ULONG     NumberOfBytesToWrite,            = 5883 (16FB)
    OUT PULONG   NumberOfBytesWritten OPTIONAL ); = 0
-```
+{% endhighlight %}
 The next hit is at the “condole” (CreateTimeQueueTimer) in the “eyesonly” function, which once completed will transfer control to the shellcode’s entry point at offset 0x1090 from its base (0x5F81090 - 0x5F80000).
 
 <p><a href="{{site.baseurl}}/images/20.png"><img src="{{site.baseurl}}/images/20.png"></a></p>
-```
+{% highlight %}
 condole -> CreateTimerQueueTimer(
    _Out_      PHANDLE             phNewTimer,
    _In_opt_   HANDLE              TimerQueue,
@@ -126,7 +126,7 @@ condole -> CreateTimerQueueTimer(
    _In_       DWORD               DueTime,
    _In_       DWORD               Period,
    _In_       ULONG               Flags);
-```
+{% endhighlight %}
 
 We attach a debugger (x64dbg) to the Winword’s process, go to the 0x5F81090 address and set a breakpoint, so that when the CreateTimeQueueTimer function transfers control to the shellcode’s entry point, we can proceed with our analysis from there. We go to the base of the shellcode 0x5F80000 and save 5883 (16FB) bytes from this address to a file called shellcode.bin for further analysis.
 
@@ -159,15 +159,6 @@ def customHancitor(inString,fName):
     return val
 {% endhighlight %}
 
-
-```python
-def customHancitor(inString,fName):
-    val = 0
-    for i in inString:
-        val = ord(i) ^ ((val >> 0x18) | (val << 0x7))
-        val &= 0xFFFFFFFF
-    return val
-```
 We also need to add it in the HASH_TYPES list of tuples and re-create the database file.
 
 Finally the script is able to resolve all the hashes and mark them appropriately in the IDA database file:
