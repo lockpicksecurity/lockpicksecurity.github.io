@@ -5,6 +5,12 @@ permalink: /services/
 published: true
 ---
 
+<!--
+Where other men blindly follow the truth, Remember, nothing is true.
+Where other men are limited by morality or law, Remember, everything is permitted.
+We work in the dark to serve the light.
+-->
+
 ## Digital Investigations
 <div style="clear: left;">
     <p><img src="{{ site.baseurl }}/images/forensics.png"></p>
