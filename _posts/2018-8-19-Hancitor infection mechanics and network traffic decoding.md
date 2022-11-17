@@ -150,14 +150,13 @@ The hashing routine is located in function sub_E07 (offset 0x0E07) and incorpora
 <p><img src="{{site.baseurl}}/images/25.png"></p>
 
 
-{% highlight javascript %}
-function sayHello(name) {
-  if (!name) {
-    console.log('Hello World');
-  } else {
-    console.log(`Hello ${name}`);
-  }  
-}  
+{% highlight python %}
+def customHancitor(inString,fName):
+    val = 0
+    for i in inString:
+        val = ord(i) ^ ((val >> 0x18) | (val << 0x7))
+        val &= 0xFFFFFFFF
+    return val
 {% endhighlight %}
 
 
@@ -250,7 +249,8 @@ Looking at the de-obfuscation routine (Offset 0x4015B0), we can see that it’s 
 Despite being rather simple routine to code in python, we’ll use some binary instrumentation to recreate the decoding functionality of the malware. In order to do that we’ll use the unicorn python library which emulates CPU instructions. Since python does not natively support LZNT1 decompression a third party library was used.
 Unfortunately this library produced errors when used in a script, but worked just fine when invoked from the python interpreter directly so only the byte shifting functionality has been ported to python. Below is the code used to re-implement the byte mangling functionality:
 
-```
+
+{% highlight python %}
 from __future__ import print_function
 from unicorn import *
 from unicorn.x86_const import *
@@ -293,7 +293,8 @@ except UcError as e:
 fw = open("/path/to/extracted/compressed1.exe", "wb")
 fw.write(compressed)
 fw.close()
-```
+{% endhighlight %}
+
 The compressed1.exe is further decompressed manually into its final binary file. This would have worked just fine, but rather later I noticed that the PCAP file is missing packets, therefore no proper extraction could be achieved to verify our analysis results 😞.
 
 <p><a href="{{site.baseurl}}/images/41.png"><img src="{{site.baseurl}}/images/41.png"></a></p>
