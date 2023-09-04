@@ -11,6 +11,12 @@ Where other men are limited by morality or law, Remember, everything is permitte
 We work in the dark to serve the light.
 -->
 
+## Adversary Deception
+<div style="clear: left;">
+    <p><img src="{{ site.baseurl }}/images/AdversaryDeception.png"></p>
+    <p>By combining technical and social based approaches in misleading potential or current threat actors, we can increase your chances in identifying ongoing attacks and misguide adversaries safely away from your organization's network. Adversaries' tactics, techniques and procedures (TTPs) will be studied and used to your advantage. </p>
+</div>
+
 ## Digital Investigations
 <div style="clear: left;">
     <p><img src="{{ site.baseurl }}/images/forensics.png"></p>
@@ -32,17 +38,13 @@ We work in the dark to serve the light.
 ## Network Security Monitoring
 <div style="clear: left;">
     <p><img src="{{ site.baseurl }}/images/NSM.png"></p>
-    <p>We can increase the visibility in your environment by installing our network monitoring devices which will alert if malicious traffic is detected and store valuable network communication data to assist in further investigations. (in development)</p>
+    <p>We can increase the visibility in your environment by installing our network monitoring devices which will alert if malicious traffic is detected and store valuable network communication data to assist in further investigations. </p>
 </div>
 
 ## Compromise Assessment
 <div style="clear: left;">
     <p><img src="{{ site.baseurl }}/images/CompromiseAssessment.png"></p>
-    <p>Utilizing the experience accumulated over the years in fighting nation state adversaries, we can assess the health of your environment for any signs of ongoing or past security breaches. (in development)</p>
+    <p>Utilizing the experience accumulated over the years in fighting nation state adversaries, we can assess the health of your environment for any signs of ongoing or past security breaches. </p>
 </div>
 
-## Adversary Deception
-<div style="clear: left;">
-    <p><img src="{{ site.baseurl }}/images/AdversaryDeception.png"></p>
-    <p>By combining technical and social based approaches in misleading potential or current threat actors, we can increase your chances in identifying ongoing attacks and misguide adversaries safely away from your organization's network. Adversaries' tactics, techniques and procedures (TTPs) will be studied and used to your advantage. (in development)</p>
-</div>
+
