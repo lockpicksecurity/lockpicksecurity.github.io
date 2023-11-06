@@ -11,6 +11,6 @@ Where other men are limited by morality or law, Remember, everything is permitte
 We work in the dark to serve the light.
 //-->
 
-## SAFE
+## (S)ee (A)ll (F)orensic (E)vidence
 
-Lock Pick Security's (S)ee (A)ll (F)orensic (Evidence) or SAFE tool is a tool to aid incident response triaging of suspected endpoints by gathering forensic artefacts files and a variety of volatile data information from a Microsoft Windows powered machine. It is a command line tool and requires administrative privileges in order to run.
+Lock Pick Security's SAFE tool is a tool to aid incident response triaging of suspected endpoints by gathering forensic artefacts files and a variety of volatile data information from a Microsoft Windows powered machine. It is a command line tool and requires administrative privileges in order to run.
