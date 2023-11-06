@@ -11,15 +11,6 @@ Where other men are limited by morality or law, Remember, everything is permitte
 We work in the dark to serve the light.
 //-->
 
-## Our Approach
-
-![Our Approach]({{site.baseurl}}/working_environment-300x168.jpg)
-
-Lock Pick Security Ltd is a research-led company providing unique approach in combating adversaries. It is found by Kiril Manasiev who is fighting nation state threat actors and other adversaries in the front line trenches of Incident Response since 2010. Over the years he has applied that same unique approach which you will get once you engage us to protect your environment.
-
-
-
-
 ## Kiril Manasiev - Founder
 
 ![Kiril Manasiev - Director]({{site.baseurl}}/Kiril_Manasiev-294x300.jpg)
