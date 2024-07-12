@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Projects
-permalink: /Prokjects/
+permalink: /Projects/
 published: true
 ---
 
