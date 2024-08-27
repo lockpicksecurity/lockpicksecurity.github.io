@@ -43,3 +43,6 @@ My training and qualifications include:
 - FireEye "NX, EX, HX, FX, CM, AX", December 2014
 - Access Data "Resolution One", July 2014
 - McAfee "Various product trainings", February 2010
+
+![LPS_logo]({{site.baseurl}}/LPS_logo.svg)
+
