@@ -1,4 +1,4 @@
 version: STSv1
-mode: enforce
+mode: testing
 mx: lockpicksecurity-com.mail.protection.outlook.com
 max_age: 604800
