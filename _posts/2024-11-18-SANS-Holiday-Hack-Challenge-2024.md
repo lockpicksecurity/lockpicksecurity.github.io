@@ -14,11 +14,11 @@ Easy-peasy
 
 ## ELF Connect (Hard)
 The hints suggest that we need to beat an impossible High score. 
-Looking at the code at initialization of variables we find that the variable score contains our score and as such is subject to manipulation to beat that highScore variable.
+Looking at the code at initialization of variables we find that the variable score contains our score and as such is subject to manipulation to beat that "highScore" variable.
 
 <p><img src="{{site.baseurl}}/images/sans2024/image003.png"></p>
 
-On line 247 the score variable is updated by 100 once a successful combination submission is made so we set a breakpoint in Dev tool’s debugger on that line.  
+On line 247 the "score" variable is updated by 100 once a successful combination submission is made so we set a breakpoint in Dev tool’s debugger on that line.  
 
 <p><img src="{{site.baseurl}}/images/sans2024/image006.png"></p>
 
@@ -35,7 +35,7 @@ Success!
 ## ELF Minder 9000 (A Real Pickle)
 
 I can’t be bothered to show you how to pass all the previous levels as it’s a real fun playing it without cheating. In this level however, you must cheat as there’s no logical path that you can take to lead the elf to the finish line.
-Jumping straight into the javascript code I can find a nice reference left by the author suggesting a variable holding all level data game.entities and a reference to an editor which is not visible to us by default.
+Jumping straight into the javascript code I can find a nice reference left by the author suggesting a variable holding all level data "game.entities" and a reference to an editor which is not visible to us by default.
 
 <p><img src="{{site.baseurl}}/images/sans2024/image011.png"></p>
 
@@ -71,7 +71,7 @@ Easy-peasy lemon squeezy.
 ## cURLing (Hard)
 I can’t say this is much harder than the easy version of the challenge. 
 
-Once in the terminal all you need is to list the contents of the file HARD-MODE.txt inside the current folder
+Once in the terminal all you need is to list the contents of the file "HARD-MODE.txt" inside the current folder
 
 <p><img src="{{site.baseurl}}/images/sans2024/image020.png"></p>
 
@@ -112,7 +112,7 @@ In the items section there’ s the link to the archive containing these small i
 
 <p><img src="{{site.baseurl}}/images/sans2024/image030.png"></p>
 
-Once downloaded the python script will need to be executed in the same directory where the folder of extracted images is. Just remember to install all python dependencies. Once successful it generated the following image for me (a bit odd but not sure you’ll get the same results). I had to invert it horizontally to make it a bit clearer.
+Once downloaded the python script will need to be executed in the same directory where the folder of extracted images sits. Just remember to install all python dependencies. Once successful it generated the following image for me (a bit odd but not sure you’ll get the same results). I had to invert it horizontally to make it a bit clearer.
 
 <p><img src="{{site.baseurl}}/images/sans2024/image032.png"></p>
  
@@ -146,7 +146,7 @@ Resume the execution of the javascript in the debugger. Success!
 
 
 ## Hardware hacking part 2 (easy)
-Once we enter the terminal we do “ls -alh” to display all contents of the home’s folder. This suggest we have an interesting file called access_cards, but the focus first is on the bash history file. It reveals the passcode left in there hidden in plain sight.
+Once we enter the terminal we do “ls -alh” to display all contents of the home’s folder. This suggest we have an interesting file called "access_cards", but the focus first is on the bash history file. It reveals the passcode left in there hidden in plain sight.
 
 <p><img src="{{site.baseurl}}/images/sans2024/image041.png"></p>
  
