@@ -204,7 +204,7 @@ The elves/hints also suggesting using the ottendorf /book cypher to decode the c
 This is cross-referenced with the 9 digits keypad with letters. 
 {% highlight c %}
 2:6:1    	Letter: S	7
-4:19:3 		Letter: A	2
+4:19:3 	Letter: A	2
 6:1:1		Letter: N	6
 3:10:4		Letter: T	8
 14:8:3		Letter: A	2
