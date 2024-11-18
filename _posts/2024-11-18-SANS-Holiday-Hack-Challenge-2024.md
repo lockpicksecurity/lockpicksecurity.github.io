@@ -229,11 +229,11 @@ Inside devtools’s debugger we find the code and set a breakpoint either on it 
  
 And resume execution of the script. The UV flashlight appears and by selecting it and dragging it over the keypad we can see that fingerprints appear over the 2, 6, 7, 8 and Enter keys. 
 
-<p><img src="{{site.baseurl}}/images/sans2024/image063.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image062.png"></p>
  
 Realistically speaking, we didn’t even need to do that as the code inside function checkOverlap() reveals which keys would be flagged up anyway.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image066.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image063.png"></p>
 
 Well… that doesn’t give us a whole lot of more clues that we didn’t know from before. The previous passcode contained the same keys. It’s a good thing that we know the password is 5 digits and only contains a combination of 4 digits. We’ll have to brute-force it somehow.
 I had to get a function to generate all possible 5 digit combinations of the 4 known keys used. There are 1024 in total combinations so we need to get them all and submit to the server for validation.
