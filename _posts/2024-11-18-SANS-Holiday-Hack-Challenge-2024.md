@@ -229,38 +229,38 @@ And resume execution of the script. The UV flashlight appears and by selecting i
  
 Realistically speaking, we didn’t even need to do that as the code inside function checkOverlap() reveals which keys would be flagged up anyway.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image062.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image063.png"></p>
 
 Well… that doesn’t give us a whole lot of more clues that we didn’t know from before. The previous passcode contained the same keys. It’s a good thing that we know the password is 5 digits and only contains a combination of 4 digits. We’ll have to brute-force it somehow.
 I had to get a function to generate all possible 5 digit combinations of the 4 known keys used. There are 1024 in total combinations so we need to get them all and submit to the server for validation.
  
 Onto the first quest -> generating all possible combinations with the help of Chat-GPT, I get the following javascript code to run inside the javascript debugger’s console:
 
-<p><img src="{{site.baseurl}}/images/sans2024/image063.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image066.png"></p>
  
 First, I define an array variable that will contain all possible combinations. 
 Then, I define a function that’s going to generate them all possible combinations and call it.
 Second, we need to submit these combinations to the server for validation. Normally this happens via a POST request send via the “submitAction” function on line 369. This function receives a callback and the answer itself.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image066.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image068.png"></p>
 
 Now this is where things get hairy and surely there might be a much cleaner way of doing this, but this worked for me. 
 I submitted one bogus key combination to get all possible variables initialized. 
 Then I defined my very own modified version of the same function calling it “runmf” inside devtool’s console. Notice it lost the callback as it’s unnecessary.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image068.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image069.png"></p>
 
  I also had to add a function to delay the requests as bombarding the server gets me lots of 429 responses and wouldn’t work. So, we add a delay of 5 seconds between attempts using the below helper function and the sendData function which accepts our array as input.
  
-<p><img src="{{site.baseurl}}/images/sans2024/image069.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image071.png"></p>
  
 Finally, we call the sendData function passing the myStringArray variable. 
 
-<p><img src="{{site.baseurl}}/images/sans2024/image071.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image073.png"></p>
 
 We sit back and monitor the progress of the brute-force attempts in Devtools’ network tab.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image073.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image076.png"></p>
 
 The moment we get a 200 response is when the combination is accepted. 
 The key is “22786”. Success! 
