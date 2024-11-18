@@ -10,8 +10,8 @@ Without further adue, here's all
 
 
 
-Prologue
-ELF Connect (Easy)
+#Prologue
+##ELF Connect (Easy)
 
 
 In this challenge, I actually went through without looking at the code but this is a hack challenge so here’s what the code is telling us is the right combinations.
@@ -19,7 +19,7 @@ In this challenge, I actually went through without looking at the code but this 
 Easy-peasy
 
 
-ELF Connect (Hard)
+##ELF Connect (Hard)
 The hints suggest that we need to beat an impossible High score. 
 Looking at the code at initialization of variables we find that the variable score contains our score and as such is subject to manipulation to beat that highScore variable.
 
@@ -39,7 +39,7 @@ Success!
 <p><img src="{{site.baseurl}}/images/sans2024/image010.png"></p>
 
 
-ELF Minder 9000 (A Real Pickle)
+##ELF Minder 9000 (A Real Pickle)
 
 I can’t be bothered to show you how to pass all the previous levels as it’s a real fun playing it without cheating. In this level however, you must cheat as there’s no logical path that you can take to lead the elf to the finish line.
 Jumping straight into the javascript code I can find a nice reference left by the author suggesting a variable holding all level data game.entities and a reference to an editor which is not visible to us by default.
@@ -60,8 +60,8 @@ Then I decided to preserve all obstacles in a separate array, remove all obstacl
 <p><img src="{{site.baseurl}}/images/sans2024/image018.png"></p>
 
 
-Act I
-cURLing (Easy)
+#Act I
+##cURLing (Easy)
 This is probably the easiest of all challenges as it’s exercising the use of various parameters passed along the curl command. It’s made so easy as running “hint” on the terminal reveals the answer to you. It’ll make you type in the following in order to succeed:
 {% highlight c %}
 curl http://curlingfun:8080/
@@ -75,8 +75,7 @@ curl -k --path-as-is https://curlingfun:9090/../../etc/hacks
 
 Easy-peasy lemon squeezy.
 
-
-cURLing (Hard)
+##cURLing (Hard)
 I can’t say this is much harder than the easy version of the challenge. 
 
 Once in the terminal all you need is to list the contents of the file HARD-MODE.txt inside the current folder
@@ -98,7 +97,7 @@ Excellent work, you have solved hard mode!  You may close this terminal once HHC
 
 Success!
 
-Hardware hacking part 1 (Easy)
+##Hardware hacking part 1 (Easy)
 
 The manual already suggests that we use 3V instead of the default 5V so we flip the switch on the UART bridge to 3V. 
 
@@ -137,7 +136,7 @@ So we set it as on the image below and hit the (S) button.  Success!
 
 <p><img src="{{site.baseurl}}/images/sans2024/image034.png"></p>
 
-Hardware hacking part 1 (Hard)
+##Hardware hacking part 1 (Hard)
 Everything should be set as in the easy version of the challenge, but this time we pay more attention to the “checkit” function. We open up Firefox’s devtools (or Chrome) and navigate to the main.js file’s declaration of the checkit function on line 864.  We notice a comment about a version 1 of the API and that it should have been removed by now. Perhaps this is where we need to send our data to win the Gold for this challenge.  
 
 <p><img src="{{site.baseurl}}/images/sans2024/image036.png"></p>
@@ -153,7 +152,7 @@ This is where we made the change to the URL to account for that V1 of the API. T
 Resume the execution of the javascript in the debugger. Success!
 
 
-Hardware hacking part 2 (easy)
+##Hardware hacking part 2 (easy)
 Once we enter the terminal we do “ls -alh” to display all contents of the home’s folder. This suggest we have an interesting file called access_cards, but the focus first is on the bash history file. It reveals the passcode left in there hidden in plain sight.
 
 <p><img src="{{site.baseurl}}/images/sans2024/image041.png"></p>
@@ -164,7 +163,7 @@ We modify it to our needs to update record 42.
 <p><img src="{{site.baseurl}}/images/sans2024/image043.png"></p>
 
 
-Hardware hacking part 2 (hard)
+##Hardware hacking part 2 (hard)
 The elf suggest there’s another harder way Type "file access_cards" reveals it's an sqlite database file.
 sqlite3 executable is available in the terminal so we run it.
 In sqlite’s console we type “.tables”
@@ -196,7 +195,7 @@ sqlite> update access_cards
 
 <p><img src="{{site.baseurl}}/images/sans2024/image051.png"></p>
 
-Frosty Keypad (Easy)
+##Frosty Keypad (Easy)
 The elf’s already suggested there’s a book that the other elves were using to get the code. The book is easily discoverable on the map just on the upper right corner if I remember correctly. Once found you can read it at https://frost-y-book.com/.
 The elves/hints also suggesting using the ottendorf /book cypher to decode the code. The note left reveals it 
 
@@ -213,7 +212,7 @@ This is cross-referenced with the 9 digits keypad with letters.
 So… SANTA reveals us the code 72682. We enter it on the keypad and success! 
 
 
-Frosty Keypad (Hard)
+##Frosty Keypad (Hard)
 This one is a little bit more difficult. Hints and elves suggest using an UV light that will reveal the keys pressed by the fingerprint left on them, but this is not given to us as an option. If only we could find one… Well, let’s open up this challenge’s javascript code in Devtools and look for any hints for the flashlight. We can see some very promising variables declarations.
 
 <p><img src="{{site.baseurl}}/images/sans2024/image055.png"></p>
