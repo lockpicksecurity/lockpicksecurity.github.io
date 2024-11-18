@@ -40,6 +40,7 @@ Success!
 
 
 ELF Minder 9000 (A Real Pickle)
+
 I can’t be bothered to show you how to pass all the previous levels as it’s a real fun playing it without cheating. In this level however, you must cheat as there’s no logical path that you can take to lead the elf to the finish line.
 Jumping straight into the javascript code I can find a nice reference left by the author suggesting a variable holding all level data game.entities and a reference to an editor which is not visible to us by default.
 
@@ -77,6 +78,7 @@ Easy-peasy lemon squeezy.
 
 cURLing (Hard)
 I can’t say this is much harder than the easy version of the challenge. 
+
 Once in the terminal all you need is to list the contents of the file HARD-MODE.txt inside the current folder
 
 <p><img src="{{site.baseurl}}/images/sans2024/image020.png"></p>
@@ -97,6 +99,7 @@ Excellent work, you have solved hard mode!  You may close this terminal once HHC
 Success!
 
 Hardware hacking part 1 (Easy)
+
 The manual already suggests that we use 3V instead of the default 5V so we flip the switch on the UART bridge to 3V. 
 
 <p><img src="{{site.baseurl}}/images/sans2024/image022.png"></p>
@@ -118,6 +121,8 @@ In the items section there’ s the link to the archive containing these small i
 <p><img src="{{site.baseurl}}/images/sans2024/image030.png"></p>
 
 Once downloaded the python script will need to be executed in the same directory where the folder of extracted images is. Just remember to install all python dependencies. Once successful it generated the following image for me (a bit odd but not sure you’ll get the same results). I had to invert it horizontally to make it a bit clearer.
+
+<p><img src="{{site.baseurl}}/images/sans2024/image032.png"></p>
  
 It says that the settings are as follows:
 {% highlight c %}
@@ -130,20 +135,20 @@ Flow Control: RTS
 
 So we set it as on the image below and hit the (S) button.  Success!
 
-<p><img src="{{site.baseurl}}/images/sans2024/image032.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image034.png"></p>
 
 Hardware hacking part 1 (Hard)
 Everything should be set as in the easy version of the challenge, but this time we pay more attention to the “checkit” function. We open up Firefox’s devtools (or Chrome) and navigate to the main.js file’s declaration of the checkit function on line 864.  We notice a comment about a version 1 of the API and that it should have been removed by now. Perhaps this is where we need to send our data to win the Gold for this challenge.  
 
-<p><img src="{{site.baseurl}}/images/sans2024/image034.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image036.png"></p>
 
 The way I’ve done it is by setting a breakpoint on line 876. Weneed to set everything correctly as described earlier and once we hit the (S) button the debugger will pause execution on that line. Step into one line to initialize the variable and then you can see all of its parameters in the console.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image036.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image038.png"></p>
 
 This is where we made the change to the URL to account for that V1 of the API. To do so change the url.pathname to “/api/v1/complete” in the console
  
-<p><img src="{{site.baseurl}}/images/sans2024/image038.png"></p> 
+<p><img src="{{site.baseurl}}/images/sans2024/image039.png"></p> 
 
 Resume the execution of the javascript in the debugger. Success!
 
@@ -151,12 +156,12 @@ Resume the execution of the javascript in the debugger. Success!
 Hardware hacking part 2 (easy)
 Once we enter the terminal we do “ls -alh” to display all contents of the home’s folder. This suggest we have an interesting file called access_cards, but the focus first is on the bash history file. It reveals the passcode left in there hidden in plain sight.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image039.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image041.png"></p>
  
 
 We modify it to our needs to update record 42.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image041.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image043.png"></p>
 
 
 Hardware hacking part 2 (hard)
@@ -165,12 +170,12 @@ sqlite3 executable is available in the terminal so we run it.
 In sqlite’s console we type “.tables”
 It shows us two tables - access_cards and config. We type “.schema access_cards” and “.schema config” to see each table’s layout.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image043.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image046.png"></p>
  
 We’ll need this later when updating the entries.
 To see the contents of each table we issue the command: "select * from config" and "select * from access_cards". 
  
-<p><img src="{{site.baseurl}}/images/sans2024/image046.png"></p> 
+<p><img src="{{site.baseurl}}/images/sans2024/image047.png"></p> 
  
 The hmac_secret reveals the key used in the HMAC operation. The hints were already suggesting a reference to HMAC generator functionality in cyberchef which had the key set to UTF-8 and the hashing algorithm set to as SHA256. Thanks for the hint as this could really have been any of the other 256 bit hashing algorithms. 
 The “hmac_message_format” reveals that the format of the message is the access type (0 or 1) followed by the UUID.
@@ -180,7 +185,7 @@ However, after all these attempts I finally got it by entering manually the gene
 
 In CyberChef put "9ed1515819dec61fd361d5fdabb57f41ecce1a5fe1fe263b98c0d6943b9b232e" as the key, enter "1c06018b6-5e80-4395-ab71-ae5124560189" as input (essentially {1}{c06018b6-5e80-4395-ab71-ae5124560189} the access set to 1 followed by the UUID). This outputs "135a32d5026c5628b1753e6c67015c0f04e26051ef7391c2552de2816b1b7096" as signature.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image047.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image050.png"></p>
 
 Then we update the signature with the one generated by CyberChef.
 {% highlight c %}
@@ -189,13 +194,13 @@ sqlite> update access_cards
    ...> where id = 42;
 {% endhighlight %}
 
-<p><img src="{{site.baseurl}}/images/sans2024/image050.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image051.png"></p>
 
 Frosty Keypad (Easy)
 The elf’s already suggested there’s a book that the other elves were using to get the code. The book is easily discoverable on the map just on the upper right corner if I remember correctly. Once found you can read it at https://frost-y-book.com/.
 The elves/hints also suggesting using the ottendorf /book cypher to decode the code. The note left reveals it 
 
-<p><img src="{{site.baseurl}}/images/sans2024/image051.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image054.png"></p>
  
 This is cross-referenced with the 9 digits keypad with letters. 
 {% highlight c %}
@@ -211,25 +216,25 @@ So… SANTA reveals us the code 72682. We enter it on the keypad and success!
 Frosty Keypad (Hard)
 This one is a little bit more difficult. Hints and elves suggest using an UV light that will reveal the keys pressed by the fingerprint left on them, but this is not given to us as an option. If only we could find one… Well, let’s open up this challenge’s javascript code in Devtools and look for any hints for the flashlight. We can see some very promising variables declarations.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image054.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image055.png"></p>
  
 The isFollowing variable is however set to false from the very beginning.
 Also make a note of the maxDigits = 5 variable. This one defines the max length of the password, even though one can submit more, it’s trimmed down to just 5 when submitting to the server. 
 As we explore the code where these variables are used we notice that inside the create function, uvLight object is defined but its visible status is set to disabled.
  
-<p><img src="{{site.baseurl}}/images/sans2024/image055.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image057.png"></p>
  
 Inside devtools’s debugger we find the code and set a breakpoint either on it and step into to allow to initialize. After than we go into the console and set it to true.
  
-<p><img src="{{site.baseurl}}/images/sans2024/image057.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image059.png"></p>
  
 And resume execution of the script. The UV flashlight appears and by selecting it and dragging it over the keypad we can see that fingerprints appear over the 2, 6, 7, 8 and Enter keys. 
 
-<p><img src="{{site.baseurl}}/images/sans2024/image059.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image063.png"></p>
  
 Realistically speaking, we didn’t even need to do that as the code inside function checkOverlap() reveals which keys would be flagged up anyway.
 
-<p><img src="{{site.baseurl}}/images/sans2024/image063.png"></p>
+<p><img src="{{site.baseurl}}/images/sans2024/image066.png"></p>
 
 Well… that doesn’t give us a whole lot of more clues that we didn’t know from before. The previous passcode contained the same keys. It’s a good thing that we know the password is 5 digits and only contains a combination of 4 digits. We’ll have to brute-force it somehow.
 I had to get a function to generate all possible 5 digit combinations of the 4 known keys used. There are 1024 in total combinations so we need to get them all and submit to the server for validation.
