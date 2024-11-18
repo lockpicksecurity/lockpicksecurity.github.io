@@ -1,14 +1,7 @@
 ---
 published: true
 ---
-In this post I'll walk you through the winning combination for passing all challenges from SANS 2024 XXXX challenge event (Prologue and ACT I).
-
-[here](https://lockpicksecurity.blogspot.com/2018/08/hancitor-infection-mechanics-and.html)
-
-Without further adue, here's all 
-
-
-
+In this post I'll walk you through successful completion of all challenges from SANS Holiday Hack Challenge 2024 event (Prologue and ACT I for now). If you haven't signed up do so [here](https://www.sans.org/mlp/holiday-hack-challenge-2024/). It's real fun!
 
 # Prologue
 ## ELF Connect (Easy)
